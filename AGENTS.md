@@ -44,6 +44,19 @@ Run from repo root unless noted.
   - Screenshots or recordings for UI changes (web or native).
   - Confirmation that `bun run lint`, `bun run type-check`, and relevant tests pass.
 
+## Mandatory Code Review Workflow (Greptile)
+
+Every code change (not docs-only or config-only) **must** go through this workflow:
+
+1. **Stage and commit** changes using conventional commit format.
+2. **Create a PR** targeting `main` with **100 changed files or fewer** per PR (Greptile's execution limit). Split larger changes into multiple PRs.
+3. **Trigger a Greptile code review** on the PR.
+4. **Wait for Greptile's review** before proceeding.
+5. **If issues are raised**: fix them, push, and wait for re-review.
+6. **If no issues remain**: merge the PR and continue.
+
+Code that hasn't passed Greptile review must not be merged.
+
 ## Security & Configuration Tips
 - Never commit secrets; use `.env.local` (copied from `.env.example`).
 - Keep Convex and auth secrets in environment variables, not source files.
