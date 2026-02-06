@@ -1,0 +1,32 @@
+{
+  "name": "@ws/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@convex-dev/better-auth": "latest",
+    "@ws/backend": "workspace:*",
+    "@ws/shared": "workspace:*",
+    "better-auth": "1.4.18",
+    "convex": "^1.31",
+    "next": "^16.1",
+    "react": "^19.2",
+    "react-dom": "^19.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@ws/eslint-config": "workspace:*",
+    "@ws/typescript-config": "workspace:*",
+    "eslint": "^9",
+    "typescript": "^5.7"
+  }
+}
