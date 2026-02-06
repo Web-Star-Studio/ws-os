@@ -1,0 +1,19 @@
+{
+  "name": "@ws/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "lint": "echo 'no lint configured'"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts",
+    "./utils": "./src/utils.ts"
+  },
+  "devDependencies": {
+    "@ws/typescript-config": "workspace:*",
+    "typescript": "^5.7"
+  }
+}

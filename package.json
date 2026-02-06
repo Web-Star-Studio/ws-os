@@ -1,0 +1,26 @@
+{
+  "name": "ws-starter",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun --env-file=.env.local turbo run dev --ui=tui",
+    "dev:web": "bun --env-file=.env.local turbo run dev --ui=tui --filter=@ws/web",
+    "dev:native": "bun --env-file=.env.local turbo run dev --ui=tui --filter=@ws/native",
+    "dev:backend": "bun --env-file=.env.local turbo run dev --ui=tui --filter=@ws/backend",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "test:e2e": "bun run --cwd apps/e2e test",
+    "test:e2e:ui": "bun run --cwd apps/e2e test:ui"
+  },
+  "devDependencies": {
+    "prettier": "^3",
+    "turbo": "^2.8"
+  },
+  "packageManager": "bun@1.3.7"
+}

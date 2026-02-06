@@ -1,0 +1,24 @@
+name: OTA update on PR
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  fingerprint_android:
+    name: Fingerprint Android
+    type: fingerprint
+    environment: preview
+
+  fingerprint_ios:
+    name: Fingerprint iOS
+    type: fingerprint
+    environment: preview
+
+  update:
+    name: Publish OTA Update
+    needs: [fingerprint_android, fingerprint_ios]
+    if: ${{ needs.fingerprint_android.outputs.fingerprint_is_new == 'false' && needs.fingerprint_ios.outputs.fingerprint_is_new == 'false' }}
+    type: update
+    params:
+      branch: ${{ github.ref_name }}

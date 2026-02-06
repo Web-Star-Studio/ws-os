@@ -1,0 +1,34 @@
+name: Build preview
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  fingerprint_android:
+    name: Fingerprint Android
+    type: fingerprint
+    environment: preview
+
+  fingerprint_ios:
+    name: Fingerprint iOS
+    type: fingerprint
+    environment: preview
+
+  build_android:
+    name: Build Android Preview
+    type: build
+    needs: [fingerprint_android]
+    if: ${{ needs.fingerprint_android.outputs.fingerprint_is_new == 'true' }}
+    params:
+      platform: android
+      profile: preview
+
+  build_ios:
+    name: Build iOS Preview
+    type: build
+    needs: [fingerprint_ios]
+    if: ${{ needs.fingerprint_ios.outputs.fingerprint_is_new == 'true' }}
+    params:
+      platform: ios
+      profile: preview
