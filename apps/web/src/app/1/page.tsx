@@ -1,803 +1,578 @@
 export const metadata = {
-  title: "Web Star OS — The Operating System for Ambitious Teams",
+  title: "Web Star OS — Systematic Project Management",
 };
 
 export default function DesignOne() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,900&family=DM+Mono:wght@300;400;500&display=swap');
 
         *{margin:0;padding:0;box-sizing:border-box}
 
         :root {
-          --ink: #0a0a0a;
-          --paper: #f5f0e8;
-          --rule: #1a1a1a;
-          --accent: #c41200;
-          --faded: #8a8478;
+          --white: #fafafa;
+          --black: #111;
+          --red: #e63312;
+          --grid-line: rgba(0,0,0,0.06);
+          --gray: #888;
+          --light-gray: #eee;
         }
 
-        body { background: var(--paper); }
+        body { background: var(--white); }
 
-        .d1-wrap {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 2rem;
-          font-family: 'Libre Baskerville', Georgia, serif;
-          color: var(--ink);
-          background: var(--paper);
+        .d3-wrap {
+          font-family: 'Inter Tight', Helvetica, Arial, sans-serif;
+          color: var(--black);
+          background: var(--white);
           min-height: 100vh;
+          position: relative;
         }
 
-        /* ── MASTHEAD ── */
-        .d1-masthead {
-          padding: 1.5rem 0 1rem;
-          border-bottom: 4px double var(--ink);
+        /* ── GRID BACKGROUND ── */
+        .d3-grid-bg {
+          position: fixed;
+          inset: 0;
+          background-image:
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+          background-size: 80px 80px;
+          pointer-events: none;
+          z-index: 0;
         }
-        .d1-masthead-top {
+
+        .d3-content { position: relative; z-index: 1; }
+
+        /* ── TOPBAR ── */
+        .d3-topbar {
           display: flex;
           justify-content: space-between;
-          align-items: baseline;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.65rem;
-          text-transform: uppercase;
-          letter-spacing: 0.15em;
-          color: var(--faded);
-          margin-bottom: 0.75rem;
-        }
-        .d1-logo-text {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 900;
-          font-size: clamp(3rem, 7vw, 6rem);
-          text-align: center;
-          letter-spacing: -0.03em;
-          line-height: 0.9;
-          text-transform: uppercase;
-        }
-        .d1-logo-text span {
-          font-style: italic;
-          font-weight: 400;
-          color: var(--accent);
-        }
-        .d1-sub-masthead {
-          text-align: center;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.6rem;
-          text-transform: uppercase;
-          letter-spacing: 0.3em;
-          color: var(--faded);
-          margin-top: 0.5rem;
-          padding-bottom: 0.75rem;
-          border-bottom: 1px solid var(--rule);
-        }
-
-        /* ── NAV BAR ── */
-        .d1-nav {
-          display: flex;
-          justify-content: center;
-          gap: 2rem;
-          padding: 0.6rem 0;
-          border-bottom: 1px solid var(--rule);
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.65rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-        }
-        .d1-nav a {
-          color: var(--ink);
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-        .d1-nav a:hover { color: var(--accent); }
-
-        /* ── HERO GRID ── */
-        .d1-hero {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 0;
-          border-bottom: 2px solid var(--ink);
-          min-height: 70vh;
-        }
-        .d1-hero-main {
-          padding: 2.5rem 2.5rem 2.5rem 0;
-          border-right: 1px solid var(--rule);
-        }
-        .d1-hero-kicker {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.6rem;
-          text-transform: uppercase;
-          letter-spacing: 0.3em;
-          color: var(--accent);
-          margin-bottom: 1rem;
-          display: flex;
           align-items: center;
-          gap: 0.75rem;
+          padding: 1.5rem 3rem;
+          border-bottom: 2px solid var(--black);
         }
-        .d1-hero-kicker::before {
-          content: '';
-          width: 40px;
-          height: 1px;
-          background: var(--accent);
-        }
-        .d1-hero-headline {
-          font-family: 'Playfair Display', Georgia, serif;
+        .d3-logo {
           font-weight: 900;
-          font-size: clamp(2.5rem, 5vw, 4.5rem);
-          line-height: 1.02;
-          letter-spacing: -0.03em;
-          margin-bottom: 1.5rem;
-        }
-        .d1-hero-headline em {
-          font-style: italic;
-          font-weight: 400;
-        }
-        .d1-hero-deck {
-          font-size: 1.15rem;
-          line-height: 1.7;
-          max-width: 560px;
-          color: #3a3632;
-          margin-bottom: 2rem;
-        }
-        .d1-hero-deck .d1-drop-cap {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 4.5rem;
-          float: left;
-          line-height: 0.75;
-          margin-right: 0.15em;
-          margin-top: 0.05em;
-          font-weight: 900;
-          color: var(--ink);
-        }
-        .d1-hero-byline {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.6rem;
+          font-size: 0.85rem;
           text-transform: uppercase;
           letter-spacing: 0.15em;
-          color: var(--faded);
-          margin-top: 2rem;
-          padding-top: 1rem;
-          border-top: 1px solid var(--rule);
         }
-
-        /* ── SIDEBAR ── */
-        .d1-hero-side {
-          padding: 2.5rem 0 2.5rem 2.5rem;
+        .d3-logo .d3-red { color: var(--red); }
+        .d3-nav {
           display: flex;
-          flex-direction: column;
-          gap: 2rem;
-        }
-        .d1-sidebar-block {
-          padding-bottom: 1.5rem;
-          border-bottom: 1px solid var(--rule);
-        }
-        .d1-sidebar-block:last-child { border-bottom: none; }
-        .d1-sidebar-label {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.55rem;
+          gap: 2.5rem;
+          font-size: 0.7rem;
+          font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 0.25em;
-          color: var(--accent);
-          margin-bottom: 0.75rem;
+          letter-spacing: 0.12em;
         }
-        .d1-sidebar-stat {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 900;
-          font-size: 3.5rem;
-          line-height: 1;
-          letter-spacing: -0.04em;
-        }
-        .d1-sidebar-stat-note {
-          font-size: 0.8rem;
-          color: var(--faded);
-          margin-top: 0.35rem;
-          line-height: 1.5;
-        }
-        .d1-sidebar-quote {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-style: italic;
-          font-size: 1.15rem;
-          line-height: 1.55;
+        .d3-nav a {
+          color: var(--black);
+          text-decoration: none;
           position: relative;
-          padding-left: 1.25rem;
         }
-        .d1-sidebar-quote::before {
+        .d3-nav a::after {
           content: '';
           position: absolute;
+          bottom: -3px;
           left: 0;
-          top: 0;
-          bottom: 0;
-          width: 3px;
-          background: var(--accent);
+          width: 0;
+          height: 2px;
+          background: var(--red);
+          transition: width 0.3s;
         }
-        .d1-sidebar-cite {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.6rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          color: var(--faded);
-          margin-top: 0.75rem;
-          font-style: normal;
-        }
+        .d3-nav a:hover::after { width: 100%; }
 
-        /* ── UI SPECIMEN ── */
-        .d1-specimen {
-          padding: 3rem 0;
-          border-bottom: 2px solid var(--ink);
+        /* ── HERO ── */
+        .d3-hero {
+          padding: 0 3rem;
+          min-height: 85vh;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          border-bottom: 2px solid var(--black);
         }
-        .d1-specimen-header {
+        .d3-hero-left {
+          padding: 6rem 4rem 6rem 0;
+          border-right: 2px solid var(--black);
           display: flex;
-          justify-content: space-between;
-          align-items: baseline;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .d3-hero-tag {
+          font-family: 'DM Mono', monospace;
+          font-size: 0.6rem;
+          font-weight: 400;
+          text-transform: uppercase;
+          letter-spacing: 0.35em;
+          color: var(--red);
           margin-bottom: 2rem;
-          padding-bottom: 1rem;
-          border-bottom: 1px solid var(--rule);
         }
-        .d1-specimen-title {
-          font-family: 'Playfair Display', Georgia, serif;
+        .d3-hero-title {
           font-weight: 900;
-          font-size: 1.75rem;
+          font-size: clamp(3rem, 6vw, 5.5rem);
+          line-height: 0.92;
+          letter-spacing: -0.04em;
           text-transform: uppercase;
-          letter-spacing: -0.02em;
-        }
-        .d1-specimen-sub {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.6rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          color: var(--faded);
-        }
-        .d1-mock-ui {
-          background: var(--ink);
-          border-radius: 4px;
-          padding: 0;
-          overflow: hidden;
-          font-family: 'JetBrains Mono', monospace;
-          color: #e8e4dc;
-          position: relative;
-        }
-        .d1-mock-titlebar {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 12px 16px;
-          background: #151515;
-          border-bottom: 1px solid #222;
-        }
-        .d1-mock-dot {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background: #333;
-        }
-        .d1-mock-dot:first-child { background: #ff5f57; }
-        .d1-mock-dot:nth-child(2) { background: #febc2e; }
-        .d1-mock-dot:nth-child(3) { background: #28c840; }
-        .d1-mock-body {
-          display: grid;
-          grid-template-columns: 220px 1fr;
-          min-height: 400px;
-        }
-        .d1-mock-sidebar-ui {
-          border-right: 1px solid #222;
-          padding: 1.25rem;
-          font-size: 0.72rem;
-        }
-        .d1-mock-ws {
-          font-size: 0.6rem;
-          text-transform: uppercase;
-          letter-spacing: 0.15em;
-          color: #666;
-          margin-bottom: 1rem;
-        }
-        .d1-mock-nav-item {
-          padding: 0.4rem 0.6rem;
-          border-radius: 4px;
-          margin-bottom: 2px;
-          color: #888;
-          cursor: default;
-          transition: all 0.15s;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        .d1-mock-nav-item.active {
-          background: #1a1a1a;
-          color: #fff;
-        }
-        .d1-mock-nav-item .d1-nav-icon {
-          width: 14px;
-          height: 14px;
-          border-radius: 3px;
-          border: 1px solid #333;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.5rem;
-        }
-        .d1-mock-content {
-          padding: 1.25rem;
-        }
-        .d1-mock-content-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.5rem;
-          padding-bottom: 1rem;
-          border-bottom: 1px solid #1a1a1a;
-        }
-        .d1-mock-content-title {
-          font-size: 0.85rem;
-          font-weight: 700;
-          color: #fff;
-        }
-        .d1-mock-filter-bar {
-          display: flex;
-          gap: 0.75rem;
-          font-size: 0.6rem;
-          color: #555;
-        }
-        .d1-mock-filter-bar span { cursor: default; }
-        .d1-mock-filter-bar span.active { color: #fff; }
-        .d1-mock-task-row {
-          display: grid;
-          grid-template-columns: 18px 60px 1fr 80px 80px 60px;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.5rem 0;
-          border-bottom: 1px solid #151515;
-          font-size: 0.68rem;
-          color: #888;
-        }
-        .d1-mock-task-check {
-          width: 14px;
-          height: 14px;
-          border-radius: 50%;
-          border: 1.5px solid #444;
-        }
-        .d1-mock-task-id { color: #555; }
-        .d1-mock-task-name { color: #ddd; }
-        .d1-mock-task-label {
-          font-size: 0.55rem;
-          padding: 2px 6px;
-          border-radius: 3px;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-        .d1-label-bug { background: #3d1515; color: #ff6b6b; }
-        .d1-label-feat { background: #152a3d; color: #6bb3ff; }
-        .d1-label-imp { background: #2a3d15; color: #a8ff6b; }
-        .d1-mock-task-priority { color: #666; }
-        .d1-mock-task-assignee {
-          width: 22px;
-          height: 22px;
-          border-radius: 50%;
-          background: #333;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.5rem;
-          color: #888;
-        }
-
-        /* ── FEATURES COLUMNS ── */
-        .d1-features {
-          padding: 3rem 0;
-          border-bottom: 2px solid var(--ink);
-        }
-        .d1-features-header {
-          text-align: center;
           margin-bottom: 2.5rem;
         }
-        .d1-features-title {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 900;
-          font-size: 2.5rem;
+        .d3-hero-title .d3-thin {
+          font-weight: 100;
+          font-style: italic;
+        }
+        .d3-hero-title .d3-outline {
+          color: transparent;
+          -webkit-text-stroke: 2px var(--black);
+        }
+        .d3-hero-sub {
+          font-size: 1rem;
+          line-height: 1.7;
+          font-weight: 300;
+          max-width: 420px;
+          color: #444;
+        }
+        .d3-hero-right {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 3rem 0 3rem 4rem;
+        }
+        .d3-hero-stat-block {
+          padding: 2rem 0;
+          border-bottom: 1px solid var(--light-gray);
+        }
+        .d3-hero-stat-block:last-child { border-bottom: none; }
+        .d3-stat-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 0.55rem;
           text-transform: uppercase;
-          letter-spacing: -0.02em;
+          letter-spacing: 0.3em;
+          color: var(--gray);
           margin-bottom: 0.5rem;
         }
-        .d1-features-rule {
-          width: 60px;
-          height: 3px;
-          background: var(--accent);
-          margin: 0 auto;
-        }
-        .d1-features-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0;
-        }
-        .d1-feature-col {
-          padding: 2rem;
-          border-right: 1px solid var(--rule);
-        }
-        .d1-feature-col:last-child { border-right: none; }
-        .d1-feature-num {
-          font-family: 'Playfair Display', Georgia, serif;
+        .d3-stat-value {
           font-weight: 900;
           font-size: 4rem;
           line-height: 1;
-          color: var(--paper);
-          -webkit-text-stroke: 1.5px var(--ink);
-          margin-bottom: 1rem;
+          letter-spacing: -0.04em;
         }
-        .d1-feature-name {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 900;
-          font-size: 1.1rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          margin-bottom: 0.75rem;
-        }
-        .d1-feature-desc {
-          font-size: 0.9rem;
-          line-height: 1.7;
-          color: #5a5650;
+        .d3-stat-value .d3-red { color: var(--red); }
+        .d3-stat-note {
+          font-weight: 300;
+          font-size: 0.8rem;
+          color: var(--gray);
+          margin-top: 0.25rem;
         }
 
-        /* ── ROLES SECTION ── */
-        .d1-roles {
-          padding: 3rem 0;
-          border-bottom: 2px solid var(--ink);
-        }
-        .d1-roles-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 2rem;
-          margin-top: 2rem;
-        }
-        .d1-role-card {
-          background: var(--ink);
-          color: var(--paper);
-          padding: 2.5rem;
-          position: relative;
-          overflow: hidden;
-        }
-        .d1-role-card::before {
-          content: attr(data-role);
-          position: absolute;
-          top: -15px;
-          right: -10px;
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 900;
-          font-size: 8rem;
-          opacity: 0.05;
-          line-height: 1;
-          pointer-events: none;
-        }
-        .d1-role-badge {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.55rem;
-          text-transform: uppercase;
-          letter-spacing: 0.25em;
-          background: var(--accent);
+        /* ── RED BANNER ── */
+        .d3-banner {
+          background: var(--red);
           color: #fff;
-          padding: 4px 10px;
-          display: inline-block;
-          margin-bottom: 1.25rem;
-        }
-        .d1-role-name {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 900;
-          font-size: 1.75rem;
-          margin-bottom: 1rem;
-        }
-        .d1-role-desc {
-          font-family: 'Libre Baskerville', Georgia, serif;
-          font-size: 0.85rem;
-          line-height: 1.7;
-          opacity: 0.7;
-        }
-
-        /* ── FOOTER ── */
-        .d1-footer {
-          padding: 2rem 0;
+          padding: 1.5rem 3rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-family: 'JetBrains Mono', monospace;
+          border-bottom: 2px solid var(--black);
+        }
+        .d3-banner-text {
+          font-weight: 900;
+          font-size: 1.1rem;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+        .d3-banner-btn {
+          font-family: 'DM Mono', monospace;
+          font-size: 0.7rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          background: var(--black);
+          color: #fff;
+          border: none;
+          padding: 0.75rem 2rem;
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
+          transition: background 0.2s;
+        }
+        .d3-banner-btn:hover { background: #333; }
+
+        /* ── FEATURES ── */
+        .d3-features {
+          padding: 0 3rem;
+          border-bottom: 2px solid var(--black);
+        }
+        .d3-features-header {
+          padding: 3rem 0 2rem;
+          border-bottom: 1px solid var(--light-gray);
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+        }
+        .d3-section-title {
+          font-weight: 900;
+          font-size: 2.5rem;
+          text-transform: uppercase;
+          letter-spacing: -0.03em;
+        }
+        .d3-section-count {
+          font-family: 'DM Mono', monospace;
+          font-size: 0.6rem;
+          color: var(--gray);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+        }
+        .d3-feat-rows {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+        .d3-feat-row {
+          display: grid;
+          grid-template-columns: 80px 200px 1fr;
+          gap: 3rem;
+          align-items: start;
+          padding: 2.5rem 0;
+          border-bottom: 1px solid var(--light-gray);
+          transition: background 0.2s;
+        }
+        .d3-feat-row:hover {
+          background: rgba(230,51,18,0.02);
+        }
+        .d3-feat-num {
+          font-weight: 900;
+          font-size: 2.5rem;
+          line-height: 1;
+          color: transparent;
+          -webkit-text-stroke: 1.5px var(--black);
+        }
+        .d3-feat-row:hover .d3-feat-num {
+          -webkit-text-stroke: 1.5px var(--red);
+          color: transparent;
+        }
+        .d3-feat-name {
+          font-weight: 900;
+          font-size: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          padding-top: 0.35rem;
+        }
+        .d3-feat-desc {
+          font-weight: 300;
+          font-size: 0.95rem;
+          line-height: 1.7;
+          color: #555;
+          padding-top: 0.35rem;
+        }
+
+        /* ── ROLES SECTION ── */
+        .d3-roles {
+          padding: 0 3rem;
+          border-bottom: 2px solid var(--black);
+        }
+        .d3-roles-header {
+          padding: 3rem 0 2rem;
+          border-bottom: 1px solid var(--light-gray);
+        }
+        .d3-roles-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .d3-role-col {
+          padding: 3rem 2.5rem;
+          border-right: 2px solid var(--black);
+          position: relative;
+        }
+        .d3-role-col:last-child { border-right: none; }
+        .d3-role-letter {
+          position: absolute;
+          top: 1.5rem;
+          right: 1.5rem;
+          font-weight: 900;
+          font-size: 8rem;
+          line-height: 1;
+          color: transparent;
+          -webkit-text-stroke: 1px var(--light-gray);
+          pointer-events: none;
+        }
+        .d3-role-tag {
+          font-family: 'DM Mono', monospace;
+          font-size: 0.55rem;
+          text-transform: uppercase;
+          letter-spacing: 0.25em;
+          color: var(--red);
+          margin-bottom: 1rem;
+        }
+        .d3-role-title {
+          font-weight: 900;
+          font-size: 1.75rem;
+          text-transform: uppercase;
+          letter-spacing: -0.01em;
+          margin-bottom: 1rem;
+        }
+        .d3-role-text {
+          font-weight: 300;
+          font-size: 0.9rem;
+          line-height: 1.7;
+          color: #555;
+        }
+        .d3-role-perms {
+          margin-top: 1.5rem;
+          font-family: 'DM Mono', monospace;
+          font-size: 0.65rem;
+          color: var(--gray);
+          line-height: 2;
+        }
+        .d3-role-perm-check { color: var(--red); margin-right: 0.5rem; }
+
+        /* ── CTA ── */
+        .d3-cta {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          border-bottom: 2px solid var(--black);
+        }
+        .d3-cta-left {
+          padding: 6rem 4rem 6rem 3rem;
+          border-right: 2px solid var(--black);
+        }
+        .d3-cta-title {
+          font-weight: 900;
+          font-size: clamp(2rem, 4vw, 3.5rem);
+          text-transform: uppercase;
+          letter-spacing: -0.03em;
+          line-height: 0.95;
+          margin-bottom: 2rem;
+        }
+        .d3-cta-title .d3-thin { font-weight: 100; font-style: italic; }
+        .d3-cta-buttons {
+          display: flex;
+          gap: 1rem;
+        }
+        .d3-btn-primary {
+          font-family: 'Inter Tight', sans-serif;
+          font-size: 0.7rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          background: var(--red);
+          color: #fff;
+          border: 2px solid var(--red);
+          padding: 1rem 2.5rem;
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
+          transition: all 0.2s;
+        }
+        .d3-btn-primary:hover { background: var(--black); border-color: var(--black); }
+        .d3-btn-outline {
+          font-family: 'Inter Tight', sans-serif;
+          font-size: 0.7rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          background: transparent;
+          color: var(--black);
+          border: 2px solid var(--black);
+          padding: 1rem 2.5rem;
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
+          transition: all 0.2s;
+        }
+        .d3-btn-outline:hover { background: var(--black); color: #fff; }
+        .d3-cta-right {
+          padding: 6rem 3rem 6rem 4rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .d3-cta-list {
+          list-style: none;
+          font-weight: 300;
+          font-size: 1rem;
+          line-height: 2.5;
+          color: #555;
+        }
+        .d3-cta-list li::before {
+          content: '\\2192';
+          color: var(--red);
+          margin-right: 1rem;
+          font-weight: 700;
+        }
+
+        /* ── FOOTER ── */
+        .d3-footer {
+          padding: 1.5rem 3rem;
+          display: flex;
+          justify-content: space-between;
+          font-family: 'DM Mono', monospace;
           font-size: 0.6rem;
           text-transform: uppercase;
           letter-spacing: 0.15em;
-          color: var(--faded);
-        }
-        .d1-cta-btn {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.7rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          background: var(--ink);
-          color: var(--paper);
-          border: none;
-          padding: 1rem 2.5rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          text-decoration: none;
-          display: inline-block;
-        }
-        .d1-cta-btn:hover {
-          background: var(--accent);
-          color: #fff;
-        }
-        .d1-cta-row {
-          display: flex;
-          gap: 1rem;
-          align-items: center;
-          margin-top: 2rem;
-        }
-        .d1-cta-btn-ghost {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.7rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          background: transparent;
-          color: var(--ink);
-          border: 1.5px solid var(--ink);
-          padding: 1rem 2.5rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          text-decoration: none;
-          display: inline-block;
-        }
-        .d1-cta-btn-ghost:hover {
-          background: var(--ink);
-          color: var(--paper);
-        }
-
-        /* ── COLUMN RULE DIVIDERS ── */
-        .d1-col-divider {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          margin: 0.5rem 0;
-        }
-        .d1-col-divider::before,
-        .d1-col-divider::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: var(--rule);
-        }
-        .d1-col-divider span {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 0.85rem;
-        }
-
-        /* ── TICKER ── */
-        .d1-ticker {
-          background: var(--ink);
-          color: var(--paper);
-          overflow: hidden;
-          white-space: nowrap;
-          padding: 0.6rem 0;
-          border-bottom: 1px solid #333;
-        }
-        .d1-ticker-inner {
-          display: inline-block;
-          animation: d1-scroll 30s linear infinite;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.65rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-        }
-        @keyframes d1-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .d1-ticker-sep {
-          color: var(--accent);
-          margin: 0 2rem;
+          color: var(--gray);
         }
 
         @media (max-width: 900px) {
-          .d1-hero { grid-template-columns: 1fr; }
-          .d1-hero-main { border-right: none; padding-right: 0; border-bottom: 1px solid var(--rule); }
-          .d1-hero-side { padding-left: 0; }
-          .d1-features-grid, .d1-roles-grid { grid-template-columns: 1fr; }
-          .d1-feature-col { border-right: none; border-bottom: 1px solid var(--rule); }
-          .d1-mock-body { grid-template-columns: 1fr; }
-          .d1-mock-sidebar-ui { display: none; }
+          .d3-hero, .d3-cta { grid-template-columns: 1fr; }
+          .d3-hero-left { border-right: none; border-bottom: 2px solid var(--black); padding-right: 0; }
+          .d3-roles-grid { grid-template-columns: 1fr; }
+          .d3-role-col { border-right: none; border-bottom: 1px solid var(--light-gray); }
+          .d3-feat-row { grid-template-columns: 60px 1fr; }
+          .d3-feat-desc { grid-column: 1 / -1; }
+          .d3-topbar, .d3-features, .d3-roles, .d3-cta-left, .d3-cta-right, .d3-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
         }
       `}</style>
 
-      <div className="d1-wrap">
-        {/* TICKER */}
-        <div className="d1-ticker">
-          <div className="d1-ticker-inner">
-            <span>Workspaces</span><span className="d1-ticker-sep">/</span>
-            <span>Projects</span><span className="d1-ticker-sep">/</span>
-            <span>Tasks</span><span className="d1-ticker-sep">/</span>
-            <span>Cycles</span><span className="d1-ticker-sep">/</span>
-            <span>Labels</span><span className="d1-ticker-sep">/</span>
-            <span>Role-Based Access</span><span className="d1-ticker-sep">/</span>
-            <span>Customer Portal</span><span className="d1-ticker-sep">/</span>
-            <span>Auto-Generated IDs</span><span className="d1-ticker-sep">/</span>
-            <span>Workspaces</span><span className="d1-ticker-sep">/</span>
-            <span>Projects</span><span className="d1-ticker-sep">/</span>
-            <span>Tasks</span><span className="d1-ticker-sep">/</span>
-            <span>Cycles</span><span className="d1-ticker-sep">/</span>
-            <span>Labels</span><span className="d1-ticker-sep">/</span>
-            <span>Role-Based Access</span><span className="d1-ticker-sep">/</span>
-            <span>Customer Portal</span><span className="d1-ticker-sep">/</span>
-            <span>Auto-Generated IDs</span><span className="d1-ticker-sep">/</span>
-          </div>
-        </div>
+      <div className="d3-wrap">
+        <div className="d3-grid-bg"></div>
+        <div className="d3-content">
 
-        {/* MASTHEAD */}
-        <div className="d1-masthead">
-          <div className="d1-masthead-top">
-            <span>Vol. I &mdash; No. 1</span>
-            <span>Project Management, Redefined</span>
-            <span>Est. 2025</span>
-          </div>
-          <div className="d1-logo-text">
-            Web Star <span>OS</span>
-          </div>
-          <div className="d1-sub-masthead">
-            The Operating System for Teams Who Ship &mdash; Workspaces &bull; Projects &bull; Tasks &bull; Cycles &bull; Labels
-          </div>
-        </div>
-
-        {/* NAV */}
-        <nav className="d1-nav">
-          <a href="#features">Features</a>
-          <a href="#interface">Interface</a>
-          <a href="#roles">Roles</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#changelog">Changelog</a>
-        </nav>
-
-        {/* HERO */}
-        <div className="d1-hero">
-          <div className="d1-hero-main">
-            <div className="d1-hero-kicker">Exclusive Report</div>
-            <h1 className="d1-hero-headline">
-              The End of<br />
-              Scattered <em>Project</em><br />
-              Management
-            </h1>
-            <p className="d1-hero-deck">
-              <span className="d1-drop-cap">W</span>eb Star OS unifies workspaces, projects, tasks, sprints, and access control into a single, opinionated system. No more juggling five tools. No more context-switching. One workspace to rule your entire operation&mdash;from backlog grooming to customer feedback.
-            </p>
-            <div className="d1-cta-row">
-              <a className="d1-cta-btn" href="#">Start Free Trial</a>
-              <a className="d1-cta-btn-ghost" href="#">Read the Docs</a>
-            </div>
-            <div className="d1-hero-byline">
-              Reporting by the Web Star team &bull; 6 min read
-            </div>
+          {/* TOPBAR */}
+          <div className="d3-topbar">
+            <div className="d3-logo">Web Star <span className="d3-red">OS</span></div>
+            <nav className="d3-nav">
+              <a href="#features">Features</a>
+              <a href="#roles">Roles</a>
+              <a href="#pricing">Pricing</a>
+              <a href="#docs">Docs</a>
+            </nav>
           </div>
 
-          <div className="d1-hero-side">
-            <div className="d1-sidebar-block">
-              <div className="d1-sidebar-label">Tasks Managed</div>
-              <div className="d1-sidebar-stat">2.4M</div>
-              <div className="d1-sidebar-stat-note">across 1,200+ teams in the first year</div>
+          {/* HERO */}
+          <div className="d3-hero">
+            <div className="d3-hero-left">
+              <div className="d3-hero-tag">Project Management System / 2025</div>
+              <h1 className="d3-hero-title">
+                <span className="d3-thin">Systematic</span><br />
+                Project<br />
+                <span className="d3-outline">Management</span>
+              </h1>
+              <p className="d3-hero-sub">
+                Workspaces, projects, tasks, cycles, and labels — unified in one precise system.
+                Three roles. Zero ambiguity. Every task identified.
+              </p>
             </div>
-            <div className="d1-sidebar-block">
-              <div className="d1-sidebar-label">Average Cycle Time</div>
-              <div className="d1-sidebar-stat">-38%</div>
-              <div className="d1-sidebar-stat-note">reduction in sprint completion time</div>
-            </div>
-            <div className="d1-sidebar-block">
-              <div className="d1-sidebar-quote">
-                &ldquo;We replaced Linear, Jira, and Notion with one tool. The auto-generated task IDs alone saved us hours.&rdquo;
-                <div className="d1-sidebar-cite">&mdash; Sarah Chen, CTO at Modular</div>
+            <div className="d3-hero-right">
+              <div className="d3-hero-stat-block">
+                <div className="d3-stat-label">Active Workspaces</div>
+                <div className="d3-stat-value">1,247</div>
+                <div className="d3-stat-note">organizations onboarded</div>
+              </div>
+              <div className="d3-hero-stat-block">
+                <div className="d3-stat-label">Cycle Velocity</div>
+                <div className="d3-stat-value"><span className="d3-red">+</span>38%</div>
+                <div className="d3-stat-note">average improvement</div>
+              </div>
+              <div className="d3-hero-stat-block">
+                <div className="d3-stat-label">Tasks Managed</div>
+                <div className="d3-stat-value">2.4<span className="d3-red">M</span></div>
+                <div className="d3-stat-note">with auto-generated identifiers</div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* UI SPECIMEN */}
-        <div className="d1-specimen" id="interface">
-          <div className="d1-specimen-header">
-            <div className="d1-specimen-title">The Interface</div>
-            <div className="d1-specimen-sub">Fig. 1 &mdash; Task Board View</div>
+          {/* RED BANNER */}
+          <div className="d3-banner">
+            <div className="d3-banner-text">Free for teams up to 5 members &mdash; no credit card required</div>
+            <a className="d3-banner-btn" href="#">Start Now</a>
           </div>
-          <div className="d1-mock-ui">
-            <div className="d1-mock-titlebar">
-              <div className="d1-mock-dot"></div>
-              <div className="d1-mock-dot"></div>
-              <div className="d1-mock-dot"></div>
+
+          {/* FEATURES */}
+          <div className="d3-features" id="features">
+            <div className="d3-features-header">
+              <div className="d3-section-title">Features</div>
+              <div className="d3-section-count">06 Core Modules</div>
             </div>
-            <div className="d1-mock-body">
-              <div className="d1-mock-sidebar-ui">
-                <div className="d1-mock-ws">Acme Corp</div>
-                <div className="d1-mock-nav-item"><span className="d1-nav-icon">#</span> Inbox</div>
-                <div className="d1-mock-nav-item"><span className="d1-nav-icon">&bull;</span> My Issues</div>
-                <div className="d1-mock-nav-item active"><span className="d1-nav-icon">&gt;</span> Projects</div>
-                <div className="d1-mock-nav-item"><span className="d1-nav-icon">~</span> Cycles</div>
-                <div className="d1-mock-nav-item"><span className="d1-nav-icon">@</span> Members</div>
-                <div className="d1-mock-nav-item"><span className="d1-nav-icon">&amp;</span> Settings</div>
-              </div>
-              <div className="d1-mock-content">
-                <div className="d1-mock-content-header">
-                  <div className="d1-mock-content-title">Web Star Frontend &mdash; Sprint 14</div>
-                  <div className="d1-mock-filter-bar">
-                    <span className="active">All</span>
-                    <span>In Progress</span>
-                    <span>Review</span>
-                    <span>Done</span>
-                  </div>
+            <div className="d3-feat-rows">
+              {[
+                { num: "01", name: "Workspaces", desc: "Isolated environments for each team or department. Independent settings, members, billing, and data. Complete separation with shared infrastructure." },
+                { num: "02", name: "Projects", desc: "Logical groupings with custom workflows, statuses, and views. Each project gets a unique prefix for auto-generated task identifiers." },
+                { num: "03", name: "Tasks", desc: "First-class objects with auto-IDs (WS-001), rich markdown, sub-tasks, bidirectional relations, and complete activity history." },
+                { num: "04", name: "Cycles", desc: "Time-boxed sprints with burndown visualization, velocity tracking, and automatic rollover for unfinished work items." },
+                { num: "05", name: "Labels", desc: "Hierarchical color-coded tags scoped to workspace or project level. Instant cross-project filtering and bulk operations." },
+                { num: "06", name: "Customer Portal", desc: "External-facing interface for feedback submission, support tickets, and project visibility. Separate from internal workflows." },
+              ].map((f) => (
+                <div key={f.num} className="d3-feat-row">
+                  <div className="d3-feat-num">{f.num}</div>
+                  <div className="d3-feat-name">{f.name}</div>
+                  <div className="d3-feat-desc">{f.desc}</div>
                 </div>
-                {[
-                  { id: "WS-142", name: "Implement drag-and-drop task reordering", label: "Feature", cls: "d1-label-feat", priority: "Urgent", assignee: "SC" },
-                  { id: "WS-143", name: "Fix sidebar collapse state persistence", label: "Bug", cls: "d1-label-bug", priority: "High", assignee: "JL" },
-                  { id: "WS-144", name: "Add keyboard shortcuts for task actions", label: "Improvement", cls: "d1-label-imp", priority: "Medium", assignee: "AK" },
-                  { id: "WS-145", name: "Design customer portal feedback widget", label: "Feature", cls: "d1-label-feat", priority: "High", assignee: "MR" },
-                  { id: "WS-146", name: "Optimize cycle burndown chart rendering", label: "Improvement", cls: "d1-label-imp", priority: "Medium", assignee: "DP" },
-                  { id: "WS-147", name: "Role permission check on workspace invite", label: "Bug", cls: "d1-label-bug", priority: "Urgent", assignee: "SC" },
-                  { id: "WS-148", name: "Auto-assign labels based on project template", label: "Feature", cls: "d1-label-feat", priority: "Low", assignee: "JL" },
-                ].map((task) => (
-                  <div key={task.id} className="d1-mock-task-row">
-                    <div className="d1-mock-task-check"></div>
-                    <div className="d1-mock-task-id">{task.id}</div>
-                    <div className="d1-mock-task-name">{task.name}</div>
-                    <div><span className={`d1-mock-task-label ${task.cls}`}>{task.label}</span></div>
-                    <div className="d1-mock-task-priority">{task.priority}</div>
-                    <div className="d1-mock-task-assignee">{task.assignee}</div>
-                  </div>
-                ))}
+              ))}
+            </div>
+          </div>
+
+          {/* ROLES */}
+          <div className="d3-roles" id="roles">
+            <div className="d3-roles-header">
+              <div className="d3-section-title">Three Roles</div>
+            </div>
+            <div className="d3-roles-grid">
+              <div className="d3-role-col">
+                <div className="d3-role-letter">A</div>
+                <div className="d3-role-tag">Full Control</div>
+                <div className="d3-role-title">Admin</div>
+                <div className="d3-role-text">Complete workspace authority. Billing, members, settings, and all operational control.</div>
+                <div className="d3-role-perms">
+                  <div><span className="d3-role-perm-check">&check;</span>Workspace settings</div>
+                  <div><span className="d3-role-perm-check">&check;</span>Member management</div>
+                  <div><span className="d3-role-perm-check">&check;</span>Billing &amp; invoices</div>
+                  <div><span className="d3-role-perm-check">&check;</span>All project operations</div>
+                </div>
+              </div>
+              <div className="d3-role-col">
+                <div className="d3-role-letter">E</div>
+                <div className="d3-role-tag">Build &amp; Ship</div>
+                <div className="d3-role-title">Employee</div>
+                <div className="d3-role-text">Project-scoped access. Create tasks, manage cycles, apply labels, track progress.</div>
+                <div className="d3-role-perms">
+                  <div><span className="d3-role-perm-check">&check;</span>Create &amp; edit tasks</div>
+                  <div><span className="d3-role-perm-check">&check;</span>Manage cycles</div>
+                  <div><span className="d3-role-perm-check">&check;</span>Apply labels</div>
+                  <div><span className="d3-role-perm-check">&check;</span>Project views</div>
+                </div>
+              </div>
+              <div className="d3-role-col">
+                <div className="d3-role-letter">C</div>
+                <div className="d3-role-tag">Portal Access</div>
+                <div className="d3-role-title">Customer</div>
+                <div className="d3-role-text">Dedicated portal for external stakeholders. Feedback, tickets, and updates.</div>
+                <div className="d3-role-perms">
+                  <div><span className="d3-role-perm-check">&check;</span>Submit feedback</div>
+                  <div><span className="d3-role-perm-check">&check;</span>Track tickets</div>
+                  <div><span className="d3-role-perm-check">&check;</span>View updates</div>
+                  <div><span className="d3-role-perm-check">&check;</span>Portal dashboard</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* FEATURES */}
-        <div className="d1-features" id="features">
-          <div className="d1-features-header">
-            <div className="d1-features-title">Six Pillars</div>
-            <div className="d1-features-rule"></div>
-          </div>
-          <div className="d1-features-grid">
-            {[
-              { num: "01", name: "Workspaces", desc: "Isolated environments for each team, department, or client. Full data separation with shared billing." },
-              { num: "02", name: "Projects", desc: "Group related work with custom views, statuses, and workflows. Every project gets its own ID prefix." },
-              { num: "03", name: "Tasks", desc: "Auto-generated identifiers (WS-001), rich markdown, sub-tasks, relations, and activity history." },
-              { num: "04", name: "Cycles", desc: "Time-boxed sprints with burndown charts, velocity tracking, and automatic rollover for unfinished work." },
-              { num: "05", name: "Labels", desc: "Color-coded categorical tags with workspace-level and project-level scoping. Filter everything instantly." },
-              { num: "06", name: "Access Control", desc: "Three roles\u2014Admin, Employee, Customer\u2014each with precisely scoped permissions. No over-sharing." },
-            ].map((f) => (
-              <div key={f.num} className="d1-feature-col">
-                <div className="d1-feature-num">{f.num}</div>
-                <div className="d1-feature-name">{f.name}</div>
-                <div className="d1-feature-desc">{f.desc}</div>
+          {/* CTA */}
+          <div className="d3-cta">
+            <div className="d3-cta-left">
+              <h2 className="d3-cta-title">
+                Start<br />
+                <span className="d3-thin">Building</span><br />
+                Today
+              </h2>
+              <div className="d3-cta-buttons">
+                <a className="d3-btn-primary" href="#">Get Started</a>
+                <a className="d3-btn-outline" href="#">Documentation</a>
               </div>
-            ))}
+            </div>
+            <div className="d3-cta-right">
+              <ul className="d3-cta-list">
+                <li>Free for small teams</li>
+                <li>No credit card required</li>
+                <li>Setup in under 2 minutes</li>
+                <li>Import from Linear, Jira, or Asana</li>
+                <li>SOC 2 Type II compliant</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        {/* ROLES */}
-        <div className="d1-roles" id="roles">
-          <div className="d1-features-header">
-            <div className="d1-features-title">Three Roles, Zero Ambiguity</div>
-            <div className="d1-features-rule"></div>
+          {/* FOOTER */}
+          <div className="d3-footer">
+            <span>&copy; 2025 Web Star OS</span>
+            <span>Designed with precision</span>
           </div>
-          <div className="d1-roles-grid">
-            <div className="d1-role-card" data-role="A">
-              <div className="d1-role-badge">Full Control</div>
-              <div className="d1-role-name">Admin</div>
-              <div className="d1-role-desc">Workspace configuration, billing, member management, and all project operations. The source of truth for your organization.</div>
-            </div>
-            <div className="d1-role-card" data-role="E">
-              <div className="d1-role-badge">Build & Ship</div>
-              <div className="d1-role-name">Employee</div>
-              <div className="d1-role-desc">Full project access\u2014create tasks, manage cycles, apply labels, and track progress. Everything a maker needs, nothing they don't.</div>
-            </div>
-            <div className="d1-role-card" data-role="C">
-              <div className="d1-role-badge">Portal Access</div>
-              <div className="d1-role-name">Customer</div>
-              <div className="d1-role-desc">Dedicated portal for submitting feedback, tracking support tickets, and viewing project updates. Transparent without being overwhelming.</div>
-            </div>
-          </div>
-        </div>
-
-        {/* FOOTER */}
-        <div className="d1-footer">
-          <span>&copy; 2025 Web Star OS. All rights reserved.</span>
-          <a className="d1-cta-btn" href="#">Get Early Access &rarr;</a>
-          <span>Made for teams who ship.</span>
         </div>
       </div>
     </>
