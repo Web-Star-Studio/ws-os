@@ -83,6 +83,19 @@ The `build` task uses `dependsOn: ["^build"]` and caches `NEXT_PUBLIC_*` and `EX
 - **Root scripts must use `turbo run`** (not the `turbo` shorthand) per Turborepo best practices.
 - **CI uses `--affected`** to only run tasks on changed packages.
 
+## Mandatory Code Review Workflow (Greptile)
+
+Every time you write or modify actual code (not docs-only or config-only changes), you **must** follow this workflow before moving on to the next task:
+
+1. **Stage and commit** your changes with a conventional commit message.
+2. **Create a PR** targeting `main`. Keep each PR to **100 changed files or fewer** — this is a hard limit imposed by Greptile's review execution. If your changes exceed 100 files, split them into multiple sequential PRs.
+3. **Trigger a Greptile code review** on the PR using the `trigger_code_review` MCP tool (repo: `Web-Star-Studio/ws-os`, remote: `github`, defaultBranch: `main`).
+4. **Wait for Greptile's review comments** before proceeding. Check the review status with `get_merge_request` or `list_merge_request_comments`.
+5. **If Greptile raises issues**: fix them in the same branch, push, and wait for a follow-up review pass.
+6. **If Greptile has no issues** (or all issues are resolved): merge the PR and continue to the next task.
+
+**Do not skip this workflow.** Code that hasn't passed Greptile review must not be merged.
+
 ## EAS Workflows
 
 `.eas/workflows/` contains Expo Application Services CI/CD:
