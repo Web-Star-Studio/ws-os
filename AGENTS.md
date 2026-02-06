@@ -50,10 +50,9 @@ Every code change (not docs-only or config-only) **must** go through this workfl
 
 1. **Stage and commit** changes using conventional commit format.
 2. **Create a PR** targeting `main` with **100 changed files or fewer** per PR (Greptile's execution limit). Split larger changes into multiple PRs.
-3. **Trigger a Greptile code review** on the PR.
-4. **Wait for Greptile's review** before proceeding.
-5. **If issues are raised**: fix them, push, and wait for re-review.
-6. **If no issues remain**: merge the PR and continue.
+3. **Wait for Greptile's auto-review.** Greptile reviews every PR automatically on creation — no manual trigger needed.
+4. **If issues are raised**: fix them, push, and wait for re-review.
+5. **If no issues remain**: merge the PR and continue.
 
 Code that hasn't passed Greptile review must not be merged.
 
