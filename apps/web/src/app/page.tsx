@@ -44,6 +44,7 @@ export default function Home() {
         .lp-topbar {
           display: flex; justify-content: space-between; align-items: center;
           padding: 1.5rem 3rem; border-bottom: 2px solid var(--black);
+          position: sticky; top: 0; z-index: 10; background: var(--bg);
         }
         .lp-logo { font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; }
         .lp-logo .lp-r { color: var(--red); }
