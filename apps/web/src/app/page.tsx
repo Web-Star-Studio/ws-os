@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Web Star OS — Maximum Precision",
+  title: "Web Star OS — Precisao Maxima",
 };
 
 export default function Home() {
@@ -282,9 +282,9 @@ export default function Home() {
           <div className="lp-topbar">
             <div className="lp-logo">Web Star <span className="lp-r">OS</span></div>
             <nav className="lp-nav">
-              <a href="#features">Features</a>
-              <a href="#roles">Roles</a>
-              <a href="#pricing">Pricing</a>
+              <a href="#features">Recursos</a>
+              <a href="#roles">Perfis</a>
+              <a href="#pricing">Precos</a>
               <a href="#docs">Docs</a>
             </nav>
           </div>
@@ -292,34 +292,34 @@ export default function Home() {
           {/* HERO — GIANT TYPE */}
           <div className="lp-hero">
             <div>
-              <div className="lp-hero-tag">Project Management System / 2025</div>
+              <div className="lp-hero-tag">Sistema de Gerenciamento de Projetos / 2025</div>
               <h1 className="lp-hero-mega">
-                <span className="lp-thin">Ship</span><br />
-                <span className="lp-outline">With</span><br />
-                <span className="lp-red-fill">Force</span>
+                <span className="lp-thin">Entregue</span><br />
+                <span className="lp-outline">Com</span><br />
+                <span className="lp-red-fill">Forca</span>
               </h1>
             </div>
             <div className="lp-hero-bottom">
               <div className="lp-hero-col">
-                <div className="lp-hero-col-label">About</div>
+                <div className="lp-hero-col-label">Sobre</div>
                 <div className="lp-hero-col-text">
-                  One unified system for workspaces, projects, tasks, cycles, and labels.
-                  Role-based access keeps your team focused and customers informed.
+                  Um sistema unificado para workspaces, projetos, tarefas, ciclos e labels.
+                  Controle de acesso baseado em perfis mantém seu time focado e clientes informados.
                 </div>
                 <div className="lp-hero-cta-row">
-                  <a className="lp-btn-primary" href="#">Get Started</a>
+                  <a className="lp-btn-primary" href="#">Comece Agora</a>
                   <a className="lp-btn-outline" href="#">Docs</a>
                 </div>
               </div>
               <div className="lp-hero-col">
-                <div className="lp-hero-col-label">Velocity Gain</div>
+                <div className="lp-hero-col-label">Ganho de Velocidade</div>
                 <div className="lp-hero-col-stat"><span className="lp-r">+</span>38%</div>
-                <div className="lp-hero-col-stat-note">average sprint improvement</div>
+                <div className="lp-hero-col-stat-note">melhoria média por sprint</div>
               </div>
               <div className="lp-hero-col">
-                <div className="lp-hero-col-label">Tasks Managed</div>
+                <div className="lp-hero-col-label">Tarefas Gerenciadas</div>
                 <div className="lp-hero-col-stat">2.4<span className="lp-r">M</span></div>
-                <div className="lp-hero-col-stat-note">with auto-generated identifiers</div>
+                <div className="lp-hero-col-stat-note">com identificadores auto-gerados</div>
               </div>
             </div>
           </div>
@@ -330,9 +330,9 @@ export default function Home() {
               {[1,2].map((i) => (
                 <span key={i}>
                   <span className="lp-marquee-text">Workspaces</span><span className="lp-marquee-dot">&bull;</span>
-                  <span className="lp-marquee-text">Projects</span><span className="lp-marquee-dot">&bull;</span>
-                  <span className="lp-marquee-text">Tasks</span><span className="lp-marquee-dot">&bull;</span>
-                  <span className="lp-marquee-text">Cycles</span><span className="lp-marquee-dot">&bull;</span>
+                  <span className="lp-marquee-text">Projetos</span><span className="lp-marquee-dot">&bull;</span>
+                  <span className="lp-marquee-text">Tarefas</span><span className="lp-marquee-dot">&bull;</span>
+                  <span className="lp-marquee-text">Ciclos</span><span className="lp-marquee-dot">&bull;</span>
                   <span className="lp-marquee-text">Labels</span><span className="lp-marquee-dot">&bull;</span>
                   <span className="lp-marquee-text">RBAC</span><span className="lp-marquee-dot">&bull;</span>
                 </span>
@@ -343,17 +343,17 @@ export default function Home() {
           {/* FEATURES */}
           <div className="lp-features" id="features">
             <div className="lp-features-header">
-              <div className="lp-section-title">Features</div>
-              <div className="lp-section-count">06 Core Modules</div>
+              <div className="lp-section-title">Recursos</div>
+              <div className="lp-section-count">06 Modulos Principais</div>
             </div>
             <div className="lp-feat-grid">
               {[
-                { num: "01", name: "Workspaces", desc: "Isolated environments for each team. Independent settings, members, billing, and complete data separation." },
-                { num: "02", name: "Projects", desc: "Logical groupings with custom workflows and views. Auto-generated task ID prefixes per project." },
-                { num: "03", name: "Tasks", desc: "Auto-IDs (WS-001), rich markdown, sub-tasks, bidirectional relations, and full activity history." },
-                { num: "04", name: "Cycles", desc: "Time-boxed sprints with burndown charts, velocity tracking, and automatic rollover of unfinished work." },
-                { num: "05", name: "Labels", desc: "Hierarchical color-coded tags scoped to workspace or project. Instant cross-project filtering." },
-                { num: "06", name: "Customer Portal", desc: "External-facing interface for feedback, support tickets, and project visibility. Separate from internal tools." },
+                { num: "01", name: "Workspaces", desc: "Ambientes isolados para cada equipe. Configuracoes, membros, cobranca e separacao completa de dados." },
+                { num: "02", name: "Projetos", desc: "Agrupamentos logicos com workflows e visualizacoes personalizadas. Prefixos de ID gerados automaticamente por projeto." },
+                { num: "03", name: "Tarefas", desc: "IDs automaticos (WS-001), markdown rico, sub-tarefas, relacoes bidirecionais e historico completo de atividades." },
+                { num: "04", name: "Ciclos", desc: "Sprints com prazo definido, graficos de burndown, rastreamento de velocidade e rollover automatico de trabalho pendente." },
+                { num: "05", name: "Labels", desc: "Tags hierarquicas com cores por workspace ou projeto. Filtragem instantanea entre projetos." },
+                { num: "06", name: "Portal do Cliente", desc: "Interface externa para feedback, tickets de suporte e visibilidade de projetos. Separado das ferramentas internas." },
               ].map((f) => (
                 <div key={f.num} className="lp-feat-cell">
                   <div className="lp-feat-num">{f.num}</div>
@@ -367,13 +367,13 @@ export default function Home() {
           {/* ROLES */}
           <div className="lp-roles" id="roles">
             <div className="lp-roles-header">
-              <div className="lp-section-title">Three Roles</div>
+              <div className="lp-section-title">Tres Perfis</div>
             </div>
             <div className="lp-roles-strip">
               {[
-                { letter: "A", tag: "Full Control", title: "Admin", text: "Workspace governance, billing, member management, and complete operational authority.", perms: ["Workspace settings", "Member management", "Billing & invoices", "All project operations"] },
-                { letter: "E", tag: "Build & Ship", title: "Employee", text: "Full project access — create tasks, manage cycles, apply labels, and ship.", perms: ["Create & edit tasks", "Manage cycles", "Apply labels", "Project views"] },
-                { letter: "C", tag: "Portal Access", title: "Customer", text: "Dedicated portal for feedback, support tickets, and project updates.", perms: ["Submit feedback", "Track tickets", "View updates", "Portal dashboard"] },
+                { letter: "A", tag: "Controle Total", title: "Admin", text: "Governanca do workspace, cobranca, gestao de membros e autoridade operacional completa.", perms: ["Config. do workspace", "Gestao de membros", "Cobranca e faturas", "Todas as operacoes"] },
+                { letter: "E", tag: "Construa & Entregue", title: "Funcionario", text: "Acesso completo ao projeto — crie tarefas, gerencie ciclos, aplique labels e entregue.", perms: ["Criar e editar tarefas", "Gerenciar ciclos", "Aplicar labels", "Visualizacoes de projeto"] },
+                { letter: "C", tag: "Acesso ao Portal", title: "Cliente", text: "Portal dedicado para feedback, tickets de suporte e atualizacoes de projetos.", perms: ["Enviar feedback", "Acompanhar tickets", "Ver atualizacoes", "Painel do portal"] },
               ].map((r) => (
                 <div key={r.letter} className="lp-role-panel">
                   <div className="lp-role-giant-letter">{r.letter}</div>
@@ -395,17 +395,17 @@ export default function Home() {
           {/* CTA */}
           <div className="lp-cta">
             <h2 className="lp-cta-mega">
-              Start<br />
-              <span className="lp-thin">Building</span><br />
-              <span className="lp-outline">Today</span>
+              Comece<br />
+              <span className="lp-thin">A Construir</span><br />
+              <span className="lp-outline">Hoje</span>
             </h2>
-            <div className="lp-cta-sub">Free for teams up to 5 &mdash; no credit card required</div>
-            <a className="lp-btn-primary" href="#">Get Started &rarr;</a>
+            <div className="lp-cta-sub">Gratis para equipes de ate 5 &mdash; sem cartao de credito</div>
+            <a className="lp-btn-primary" href="#">Comece Agora &rarr;</a>
           </div>
 
           <div className="lp-footer">
             <span>&copy; 2025 Web Star OS</span>
-            <span>Designed with maximum precision</span>
+            <span>Projetado com precisao maxima</span>
           </div>
         </div>
       </div>
