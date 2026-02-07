@@ -1,557 +1,412 @@
 export const metadata = {
-  title: "Web Star OS — Command Your Universe",
+  title: "Web Star OS — Maximum Precision",
 };
 
 export default function DesignFour() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=Outfit:wght@100;200;300;400;600;700;800&family=Azeret+Mono:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,900&family=DM+Mono:wght@300;400;500&display=swap');
 
         *{margin:0;padding:0;box-sizing:border-box}
 
         :root {
-          --bg: #09090b;
-          --surface: #111113;
-          --gold: #c9a84c;
-          --gold-dim: #8a7234;
-          --gold-bright: #e8d48b;
-          --text: #e8e6e0;
-          --muted: #6b6860;
-          --border: #1f1f22;
-          --glow-gold: 0 0 60px rgba(201,168,76,0.08);
+          --bg: #fafafa;
+          --black: #111;
+          --red: #e63312;
+          --gray: #888;
+          --light: #eee;
+          --faint: #f5f5f5;
+          --grid-line: rgba(0,0,0,0.06);
         }
 
         body { background: var(--bg); }
 
-        .d4-wrap {
-          font-family: 'Outfit', sans-serif;
-          color: var(--text);
+        .d4 {
+          font-family: 'Inter Tight', Helvetica, Arial, sans-serif;
+          color: var(--black);
           background: var(--bg);
           min-height: 100vh;
           position: relative;
           overflow-x: hidden;
         }
 
-        /* FILM GRAIN */
-        .d4-grain {
-          position: fixed;
-          inset: 0;
-          opacity: 0.035;
-          pointer-events: none;
-          z-index: 9999;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-          background-repeat: repeat;
-          background-size: 128px 128px;
+        .d4-grid-bg {
+          position: fixed; inset: 0; pointer-events: none; z-index: 0;
+          background-image:
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+          background-size: 80px 80px;
         }
+        .d4-content { position: relative; z-index: 1; }
 
-        /* ── NAV ── */
+        /* ── TOPBAR ── */
+        .d4-topbar {
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 1.5rem 3rem; border-bottom: 2px solid var(--black);
+        }
+        .d4-logo { font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; }
+        .d4-logo .d4-r { color: var(--red); }
         .d4-nav {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 2rem 4rem;
-          position: relative;
-          z-index: 10;
+          display: flex; gap: 2.5rem; font-size: 0.7rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.12em;
         }
-        .d4-nav-logo {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 700;
-          font-size: 1.3rem;
-          letter-spacing: 0.04em;
-          color: var(--gold);
+        .d4-nav a {
+          color: var(--black); text-decoration: none; position: relative;
         }
-        .d4-nav-links {
-          display: flex;
-          gap: 3rem;
-          align-items: center;
+        .d4-nav a::after {
+          content: ''; position: absolute; bottom: -3px; left: 0;
+          width: 0; height: 2px; background: var(--red); transition: width 0.3s;
         }
-        .d4-nav-links a {
-          font-size: 0.7rem;
-          font-weight: 300;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          color: var(--muted);
-          text-decoration: none;
-          transition: color 0.3s;
-        }
-        .d4-nav-links a:hover { color: var(--gold); }
-        .d4-nav-cta {
-          font-family: 'Azeret Mono', monospace;
-          font-size: 0.6rem;
-          font-weight: 400;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          color: var(--bg) !important;
-          background: var(--gold);
-          padding: 0.6rem 1.5rem;
-          text-decoration: none;
-          transition: all 0.3s;
-        }
-        .d4-nav-cta:hover {
-          background: var(--gold-bright);
-        }
+        .d4-nav a:hover::after { width: 100%; }
 
-        /* ── HERO ── */
+        /* ── HERO — POSTER MAXIMALIST ── */
         .d4-hero {
-          padding: 8rem 4rem 6rem;
-          text-align: center;
+          padding: 2rem 3rem 0;
+          border-bottom: 2px solid var(--black);
           position: relative;
-        }
-        .d4-hero::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 1px;
-          height: 100px;
-          background: linear-gradient(to bottom, transparent, var(--gold-dim));
-        }
-        .d4-hero-overline {
-          font-family: 'Azeret Mono', monospace;
-          font-size: 0.6rem;
-          font-weight: 300;
-          text-transform: uppercase;
-          letter-spacing: 0.45em;
-          color: var(--gold);
-          margin-bottom: 3rem;
+          overflow: hidden;
+          min-height: 95vh;
           display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 1.5rem;
-        }
-        .d4-hero-overline::before,
-        .d4-hero-overline::after {
-          content: '';
-          width: 40px;
-          height: 1px;
-          background: var(--gold-dim);
-        }
-        .d4-hero-title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 300;
-          font-size: clamp(3rem, 8vw, 7rem);
-          line-height: 1;
-          letter-spacing: -0.02em;
-          margin-bottom: 2.5rem;
-          max-width: 900px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .d4-hero-title em {
-          font-style: italic;
-          color: var(--gold);
-        }
-        .d4-hero-subtitle {
-          font-weight: 200;
-          font-size: 1.15rem;
-          line-height: 1.8;
-          color: var(--muted);
-          max-width: 550px;
-          margin: 0 auto 3.5rem;
-        }
-        .d4-hero-actions {
-          display: flex;
-          gap: 1.5rem;
-          justify-content: center;
-        }
-        .d4-btn-gold {
-          font-family: 'Outfit', sans-serif;
-          font-size: 0.7rem;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.18em;
-          background: var(--gold);
-          color: var(--bg);
-          border: 1px solid var(--gold);
-          padding: 1.1rem 3rem;
-          cursor: pointer;
-          text-decoration: none;
-          display: inline-block;
-          transition: all 0.3s;
-          box-shadow: var(--glow-gold);
-        }
-        .d4-btn-gold:hover {
-          background: var(--gold-bright);
-          box-shadow: 0 0 80px rgba(201,168,76,0.15);
-        }
-        .d4-btn-ghost {
-          font-family: 'Outfit', sans-serif;
-          font-size: 0.7rem;
-          font-weight: 300;
-          text-transform: uppercase;
-          letter-spacing: 0.18em;
-          background: transparent;
-          color: var(--muted);
-          border: 1px solid var(--border);
-          padding: 1.1rem 3rem;
-          cursor: pointer;
-          text-decoration: none;
-          display: inline-block;
-          transition: all 0.3s;
-        }
-        .d4-btn-ghost:hover {
-          border-color: var(--gold-dim);
-          color: var(--gold);
-        }
-
-        /* ── DIVIDER ── */
-        .d4-divider {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 2rem;
-          padding: 3rem 4rem;
-        }
-        .d4-divider::before,
-        .d4-divider::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: var(--border);
-        }
-        .d4-divider-diamond {
-          width: 8px;
-          height: 8px;
-          background: var(--gold-dim);
-          transform: rotate(45deg);
-        }
-
-        /* ── FEATURES ── */
-        .d4-features {
-          padding: 2rem 4rem 4rem;
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1px;
-          background: var(--border);
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .d4-feat-card {
-          background: var(--bg);
-          padding: 3.5rem;
-          text-align: center;
-          transition: all 0.4s;
-          position: relative;
-        }
-        .d4-feat-card::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 1px;
-          background: var(--gold);
-          transition: width 0.4s;
-        }
-        .d4-feat-card:hover::after { width: 60%; }
-        .d4-feat-card:hover { background: var(--surface); }
-        .d4-feat-icon {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 300;
-          font-style: italic;
-          font-size: 3rem;
-          color: var(--gold);
-          margin-bottom: 1.5rem;
-          line-height: 1;
-        }
-        .d4-feat-title {
-          font-weight: 600;
-          font-size: 0.85rem;
-          text-transform: uppercase;
-          letter-spacing: 0.15em;
-          margin-bottom: 1rem;
-          color: var(--text);
-        }
-        .d4-feat-text {
-          font-weight: 200;
-          font-size: 0.85rem;
-          line-height: 1.75;
-          color: var(--muted);
-        }
-
-        /* ── SHOWCASE ── */
-        .d4-showcase {
-          padding: 6rem 4rem;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 6rem;
-          align-items: center;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .d4-showcase-text {}
-        .d4-showcase-label {
-          font-family: 'Azeret Mono', monospace;
-          font-size: 0.55rem;
-          font-weight: 300;
-          text-transform: uppercase;
-          letter-spacing: 0.4em;
-          color: var(--gold);
-          margin-bottom: 1.5rem;
-        }
-        .d4-showcase-heading {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 300;
-          font-size: 2.8rem;
-          line-height: 1.15;
-          margin-bottom: 1.5rem;
-        }
-        .d4-showcase-heading em { color: var(--gold); font-style: italic; }
-        .d4-showcase-desc {
-          font-weight: 200;
-          font-size: 0.95rem;
-          line-height: 1.8;
-          color: var(--muted);
-        }
-        .d4-showcase-visual {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          padding: 2.5rem;
-          position: relative;
-        }
-        .d4-showcase-visual::before {
-          content: '';
-          position: absolute;
-          top: -1px;
-          left: 2rem;
-          right: 2rem;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-        }
-        .d4-role-item {
-          padding: 1.5rem 0;
-          border-bottom: 1px solid var(--border);
-          display: flex;
+          flex-direction: column;
           justify-content: space-between;
-          align-items: center;
         }
-        .d4-role-item:last-child { border-bottom: none; }
-        .d4-role-info {}
-        .d4-role-name {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 600;
-          font-size: 1.4rem;
-          margin-bottom: 0.25rem;
+        .d4-hero-tag {
+          font-family: 'DM Mono', monospace; font-size: 0.6rem;
+          text-transform: uppercase; letter-spacing: 0.35em; color: var(--red);
+          margin-bottom: 1rem;
         }
-        .d4-role-scope {
-          font-size: 0.7rem;
-          font-weight: 200;
-          color: var(--muted);
-        }
-        .d4-role-badge {
-          font-family: 'Azeret Mono', monospace;
-          font-size: 0.55rem;
-          font-weight: 400;
+        .d4-hero-mega {
+          font-weight: 900;
+          font-size: clamp(5rem, 14vw, 13rem);
+          line-height: 0.82;
+          letter-spacing: -0.05em;
           text-transform: uppercase;
-          letter-spacing: 0.15em;
-          color: var(--gold);
-          border: 1px solid var(--gold-dim);
-          padding: 0.35rem 0.9rem;
+          margin-bottom: 1rem;
+        }
+        .d4-hero-mega .d4-outline {
+          color: transparent;
+          -webkit-text-stroke: 3px var(--black);
+        }
+        .d4-hero-mega .d4-thin {
+          font-weight: 100;
+          font-style: italic;
+        }
+        .d4-hero-mega .d4-red-fill {
+          color: var(--red);
         }
 
-        /* ── TESTIMONIAL ── */
-        .d4-testimonial {
-          padding: 6rem 4rem;
-          text-align: center;
-          max-width: 800px;
-          margin: 0 auto;
+        .d4-hero-bottom {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 0;
+          border-top: 2px solid var(--black);
+          margin: 0 -3rem;
+          padding: 0 3rem;
         }
-        .d4-quote-mark {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: 5rem;
-          color: var(--gold-dim);
-          line-height: 0.5;
-          margin-bottom: 1.5rem;
+        .d4-hero-col {
+          padding: 2rem 2rem 2rem 0;
+          border-right: 2px solid var(--black);
         }
-        .d4-quote-text {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 300;
-          font-style: italic;
-          font-size: 1.75rem;
-          line-height: 1.55;
-          color: var(--text);
-          margin-bottom: 2rem;
+        .d4-hero-col:last-child { border-right: none; padding-right: 0; padding-left: 2rem; }
+        .d4-hero-col:nth-child(2) { padding-left: 2rem; }
+        .d4-hero-col-label {
+          font-family: 'DM Mono', monospace; font-size: 0.55rem;
+          text-transform: uppercase; letter-spacing: 0.3em; color: var(--gray);
+          margin-bottom: 0.75rem;
         }
-        .d4-quote-author {
-          font-family: 'Azeret Mono', monospace;
-          font-size: 0.6rem;
-          font-weight: 300;
-          text-transform: uppercase;
-          letter-spacing: 0.3em;
-          color: var(--gold-dim);
+        .d4-hero-col-text {
+          font-size: 0.95rem; line-height: 1.6; font-weight: 300; color: #444;
         }
+        .d4-hero-col-stat {
+          font-weight: 900; font-size: 3.5rem; line-height: 1; letter-spacing: -0.04em;
+        }
+        .d4-hero-col-stat .d4-r { color: var(--red); }
+        .d4-hero-col-stat-note {
+          font-weight: 300; font-size: 0.75rem; color: var(--gray); margin-top: 0.25rem;
+        }
+        .d4-hero-cta-row { display: flex; gap: 1rem; margin-top: 1rem; }
+        .d4-btn-primary {
+          font-family: 'Inter Tight', sans-serif; font-size: 0.7rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.12em;
+          background: var(--red); color: #fff; border: 2px solid var(--red);
+          padding: 1rem 2.5rem; cursor: pointer; text-decoration: none;
+          display: inline-block; transition: all 0.2s;
+        }
+        .d4-btn-primary:hover { background: var(--black); border-color: var(--black); }
+        .d4-btn-outline {
+          font-family: 'Inter Tight', sans-serif; font-size: 0.7rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.12em;
+          background: transparent; color: var(--black); border: 2px solid var(--black);
+          padding: 1rem 2.5rem; cursor: pointer; text-decoration: none;
+          display: inline-block; transition: all 0.2s;
+        }
+        .d4-btn-outline:hover { background: var(--black); color: #fff; }
+
+        /* ── MARQUEE ── */
+        .d4-marquee {
+          background: var(--black); color: var(--bg);
+          padding: 0.75rem 0; overflow: hidden; white-space: nowrap;
+          border-bottom: 2px solid var(--black);
+        }
+        .d4-marquee-inner { display: inline-block; animation: d4m 25s linear infinite; }
+        @keyframes d4m { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .d4-marquee-text {
+          font-weight: 900; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em;
+        }
+        .d4-marquee-dot { color: var(--red); margin: 0 2rem; }
+
+        /* ── FEATURES — ASYMMETRIC ── */
+        .d4-features {
+          padding: 0 3rem; border-bottom: 2px solid var(--black);
+        }
+        .d4-features-header {
+          padding: 3rem 0 2rem; border-bottom: 1px solid var(--light);
+          display: flex; justify-content: space-between; align-items: baseline;
+        }
+        .d4-section-title {
+          font-weight: 900; font-size: 2.5rem; text-transform: uppercase; letter-spacing: -0.03em;
+        }
+        .d4-section-count {
+          font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--gray);
+          text-transform: uppercase; letter-spacing: 0.2em;
+        }
+        .d4-feat-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+        }
+        .d4-feat-cell {
+          padding: 2.5rem;
+          border-bottom: 1px solid var(--light);
+          border-right: 2px solid var(--black);
+          transition: background 0.2s;
+          position: relative;
+        }
+        .d4-feat-cell:nth-child(2n) { border-right: none; }
+        .d4-feat-cell:nth-last-child(-n+2) { border-bottom: none; }
+        .d4-feat-cell:hover { background: rgba(230,51,18,0.02); }
+        .d4-feat-num {
+          font-weight: 900; font-size: 4rem; line-height: 1;
+          color: transparent; -webkit-text-stroke: 2px var(--light);
+          position: absolute; top: 1.5rem; right: 1.5rem;
+        }
+        .d4-feat-cell:hover .d4-feat-num { -webkit-text-stroke: 2px var(--red); }
+        .d4-feat-name {
+          font-weight: 900; font-size: 1.15rem; text-transform: uppercase;
+          letter-spacing: 0.04em; margin-bottom: 0.75rem;
+        }
+        .d4-feat-desc {
+          font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: #555; max-width: 400px;
+        }
+
+        /* ── ROLES — HORIZONTAL STRIP ── */
+        .d4-roles {
+          border-bottom: 2px solid var(--black);
+        }
+        .d4-roles-header {
+          padding: 3rem 3rem 2rem; border-bottom: 2px solid var(--black);
+        }
+        .d4-roles-strip {
+          display: grid; grid-template-columns: repeat(3, 1fr);
+        }
+        .d4-role-panel {
+          padding: 3rem;
+          border-right: 2px solid var(--black);
+          position: relative;
+          min-height: 350px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .d4-role-panel:last-child { border-right: none; }
+        .d4-role-giant-letter {
+          position: absolute; bottom: -20px; right: 20px;
+          font-weight: 900; font-size: 14rem; line-height: 0.8;
+          color: transparent; -webkit-text-stroke: 2px var(--light);
+          pointer-events: none;
+        }
+        .d4-role-tag {
+          font-family: 'DM Mono', monospace; font-size: 0.55rem;
+          text-transform: uppercase; letter-spacing: 0.25em; color: var(--red);
+          margin-bottom: 0.75rem;
+        }
+        .d4-role-title {
+          font-weight: 900; font-size: 2rem; text-transform: uppercase;
+          letter-spacing: -0.02em; margin-bottom: 1rem;
+        }
+        .d4-role-text { font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: #555; }
+        .d4-role-perms {
+          margin-top: 1.5rem; font-family: 'DM Mono', monospace;
+          font-size: 0.65rem; color: var(--gray); line-height: 2.2;
+        }
+        .d4-perm-check { color: var(--red); margin-right: 0.5rem; }
 
         /* ── CTA ── */
         .d4-cta {
-          padding: 8rem 4rem;
+          padding: 5rem 3rem;
           text-align: center;
+          border-bottom: 2px solid var(--black);
           position: relative;
         }
-        .d4-cta::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 1px;
-          height: 80px;
-          background: linear-gradient(to bottom, transparent, var(--gold-dim));
+        .d4-cta-mega {
+          font-weight: 900; font-size: clamp(3rem, 8vw, 7rem);
+          text-transform: uppercase; letter-spacing: -0.04em; line-height: 0.88;
+          margin-bottom: 2rem;
         }
-        .d4-cta-heading {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 300;
-          font-size: clamp(2.5rem, 5vw, 4rem);
-          line-height: 1.1;
-          margin-bottom: 1.5rem;
-        }
-        .d4-cta-heading em { color: var(--gold); font-style: italic; }
-        .d4-cta-desc {
-          font-weight: 200;
-          font-size: 0.95rem;
-          color: var(--muted);
-          margin-bottom: 3rem;
+        .d4-cta-mega .d4-thin { font-weight: 100; font-style: italic; }
+        .d4-cta-mega .d4-outline { color: transparent; -webkit-text-stroke: 2px var(--black); }
+        .d4-cta-sub {
+          font-weight: 300; font-size: 1rem; color: var(--gray); margin-bottom: 2.5rem;
         }
 
         /* ── FOOTER ── */
         .d4-footer {
-          border-top: 1px solid var(--border);
-          padding: 2rem 4rem;
-          display: flex;
-          justify-content: space-between;
-          font-family: 'Azeret Mono', monospace;
-          font-size: 0.55rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          color: var(--muted);
-          opacity: 0.5;
+          padding: 1.5rem 3rem; display: flex; justify-content: space-between;
+          font-family: 'DM Mono', monospace; font-size: 0.6rem;
+          text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray);
         }
 
         @media (max-width: 900px) {
-          .d4-features { grid-template-columns: 1fr; }
-          .d4-showcase { grid-template-columns: 1fr; gap: 3rem; }
-          .d4-nav, .d4-hero, .d4-showcase, .d4-testimonial, .d4-cta, .d4-footer { padding-left: 2rem; padding-right: 2rem; }
+          .d4-hero-bottom, .d4-feat-grid, .d4-roles-strip { grid-template-columns: 1fr; }
+          .d4-hero-col, .d4-feat-cell, .d4-role-panel { border-right: none !important; border-bottom: 1px solid var(--light); }
+          .d4-role-giant-letter { font-size: 8rem; }
+          .d4-topbar, .d4-features, .d4-roles-header, .d4-cta, .d4-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+          .d4-hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+          .d4-hero-bottom { margin: 0 -1.5rem; padding: 0 1.5rem; }
         }
       `}</style>
 
-      <div className="d4-wrap">
-        <div className="d4-grain"></div>
+      <div className="d4">
+        <div className="d4-grid-bg"></div>
+        <div className="d4-content">
 
-        {/* NAV */}
-        <nav className="d4-nav">
-          <div className="d4-nav-logo">Web Star OS</div>
-          <div className="d4-nav-links">
-            <a href="#features">Features</a>
-            <a href="#roles">Roles</a>
-            <a href="#testimonial">Reviews</a>
-            <a href="#" className="d4-nav-cta">Early Access</a>
+          <div className="d4-topbar">
+            <div className="d4-logo">Web Star <span className="d4-r">OS</span></div>
+            <nav className="d4-nav">
+              <a href="#features">Features</a>
+              <a href="#roles">Roles</a>
+              <a href="#pricing">Pricing</a>
+              <a href="#docs">Docs</a>
+            </nav>
           </div>
-        </nav>
 
-        {/* HERO */}
-        <div className="d4-hero">
-          <div className="d4-hero-overline">Project Management</div>
-          <h1 className="d4-hero-title">
-            Command Your<br /><em>Entire Universe</em>
-          </h1>
-          <p className="d4-hero-subtitle">
-            One system for workspaces, projects, tasks, sprints, and access control.
-            Designed for teams that refuse to compromise.
-          </p>
-          <div className="d4-hero-actions">
-            <a className="d4-btn-gold" href="#">Begin Your Trial</a>
-            <a className="d4-btn-ghost" href="#">Watch the Film</a>
-          </div>
-        </div>
-
-        {/* DIVIDER */}
-        <div className="d4-divider"><div className="d4-divider-diamond"></div></div>
-
-        {/* FEATURES */}
-        <div className="d4-features" id="features">
-          {[
-            { icon: "W", title: "Workspaces", text: "Isolated environments for every team. Independent settings, members, and complete data separation." },
-            { icon: "P", title: "Projects", text: "Grouped work with custom workflows and views. Every project generates its own task ID prefix." },
-            { icon: "T", title: "Tasks", text: "Auto-identified items with rich content, sub-tasks, relations, and complete activity history." },
-            { icon: "C", title: "Cycles", text: "Time-boxed sprints with burndown charts, velocity tracking, and automatic rollover." },
-            { icon: "L", title: "Labels", text: "Hierarchical color-coded tags scoped at workspace or project level. Filter everything." },
-            { icon: "\u2726", title: "Portal", text: "Customer-facing interface for feedback, tickets, and visibility. Separate from internal tools." },
-          ].map((f) => (
-            <div key={f.title} className="d4-feat-card">
-              <div className="d4-feat-icon">{f.icon}</div>
-              <div className="d4-feat-title">{f.title}</div>
-              <div className="d4-feat-text">{f.text}</div>
+          {/* HERO — GIANT TYPE */}
+          <div className="d4-hero">
+            <div>
+              <div className="d4-hero-tag">Project Management System / 2025</div>
+              <h1 className="d4-hero-mega">
+                <span className="d4-thin">Ship</span><br />
+                <span className="d4-outline">With</span><br />
+                <span className="d4-red-fill">Force</span>
+              </h1>
             </div>
-          ))}
-        </div>
+            <div className="d4-hero-bottom">
+              <div className="d4-hero-col">
+                <div className="d4-hero-col-label">About</div>
+                <div className="d4-hero-col-text">
+                  One unified system for workspaces, projects, tasks, cycles, and labels.
+                  Role-based access keeps your team focused and customers informed.
+                </div>
+                <div className="d4-hero-cta-row">
+                  <a className="d4-btn-primary" href="#">Get Started</a>
+                  <a className="d4-btn-outline" href="#">Docs</a>
+                </div>
+              </div>
+              <div className="d4-hero-col">
+                <div className="d4-hero-col-label">Velocity Gain</div>
+                <div className="d4-hero-col-stat"><span className="d4-r">+</span>38%</div>
+                <div className="d4-hero-col-stat-note">average sprint improvement</div>
+              </div>
+              <div className="d4-hero-col">
+                <div className="d4-hero-col-label">Tasks Managed</div>
+                <div className="d4-hero-col-stat">2.4<span className="d4-r">M</span></div>
+                <div className="d4-hero-col-stat-note">with auto-generated identifiers</div>
+              </div>
+            </div>
+          </div>
 
-        {/* DIVIDER */}
-        <div className="d4-divider"><div className="d4-divider-diamond"></div></div>
+          {/* MARQUEE */}
+          <div className="d4-marquee">
+            <div className="d4-marquee-inner">
+              {[1,2].map((i) => (
+                <span key={i}>
+                  <span className="d4-marquee-text">Workspaces</span><span className="d4-marquee-dot">&bull;</span>
+                  <span className="d4-marquee-text">Projects</span><span className="d4-marquee-dot">&bull;</span>
+                  <span className="d4-marquee-text">Tasks</span><span className="d4-marquee-dot">&bull;</span>
+                  <span className="d4-marquee-text">Cycles</span><span className="d4-marquee-dot">&bull;</span>
+                  <span className="d4-marquee-text">Labels</span><span className="d4-marquee-dot">&bull;</span>
+                  <span className="d4-marquee-text">RBAC</span><span className="d4-marquee-dot">&bull;</span>
+                </span>
+              ))}
+            </div>
+          </div>
 
-        {/* ROLES SHOWCASE */}
-        <div className="d4-showcase" id="roles">
-          <div className="d4-showcase-text">
-            <div className="d4-showcase-label">Access Control</div>
-            <h2 className="d4-showcase-heading">
-              Three Roles.<br /><em>Absolute Clarity.</em>
+          {/* FEATURES */}
+          <div className="d4-features" id="features">
+            <div className="d4-features-header">
+              <div className="d4-section-title">Features</div>
+              <div className="d4-section-count">06 Core Modules</div>
+            </div>
+            <div className="d4-feat-grid">
+              {[
+                { num: "01", name: "Workspaces", desc: "Isolated environments for each team. Independent settings, members, billing, and complete data separation." },
+                { num: "02", name: "Projects", desc: "Logical groupings with custom workflows and views. Auto-generated task ID prefixes per project." },
+                { num: "03", name: "Tasks", desc: "Auto-IDs (WS-001), rich markdown, sub-tasks, bidirectional relations, and full activity history." },
+                { num: "04", name: "Cycles", desc: "Time-boxed sprints with burndown charts, velocity tracking, and automatic rollover of unfinished work." },
+                { num: "05", name: "Labels", desc: "Hierarchical color-coded tags scoped to workspace or project. Instant cross-project filtering." },
+                { num: "06", name: "Customer Portal", desc: "External-facing interface for feedback, support tickets, and project visibility. Separate from internal tools." },
+              ].map((f) => (
+                <div key={f.num} className="d4-feat-cell">
+                  <div className="d4-feat-num">{f.num}</div>
+                  <div className="d4-feat-name">{f.name}</div>
+                  <div className="d4-feat-desc">{f.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ROLES */}
+          <div className="d4-roles" id="roles">
+            <div className="d4-roles-header">
+              <div className="d4-section-title">Three Roles</div>
+            </div>
+            <div className="d4-roles-strip">
+              {[
+                { letter: "A", tag: "Full Control", title: "Admin", text: "Workspace governance, billing, member management, and complete operational authority.", perms: ["Workspace settings", "Member management", "Billing & invoices", "All project operations"] },
+                { letter: "E", tag: "Build & Ship", title: "Employee", text: "Full project access — create tasks, manage cycles, apply labels, and ship.", perms: ["Create & edit tasks", "Manage cycles", "Apply labels", "Project views"] },
+                { letter: "C", tag: "Portal Access", title: "Customer", text: "Dedicated portal for feedback, support tickets, and project updates.", perms: ["Submit feedback", "Track tickets", "View updates", "Portal dashboard"] },
+              ].map((r) => (
+                <div key={r.letter} className="d4-role-panel">
+                  <div className="d4-role-giant-letter">{r.letter}</div>
+                  <div>
+                    <div className="d4-role-tag">{r.tag}</div>
+                    <div className="d4-role-title">{r.title}</div>
+                    <div className="d4-role-text">{r.text}</div>
+                  </div>
+                  <div className="d4-role-perms">
+                    {r.perms.map((p) => (
+                      <div key={p}><span className="d4-perm-check">&check;</span>{p}</div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="d4-cta">
+            <h2 className="d4-cta-mega">
+              Start<br />
+              <span className="d4-thin">Building</span><br />
+              <span className="d4-outline">Today</span>
             </h2>
-            <p className="d4-showcase-desc">
-              Every member knows exactly what they can do. Admins govern. Employees build.
-              Customers interact through a dedicated portal. No grey areas.
-            </p>
+            <div className="d4-cta-sub">Free for teams up to 5 &mdash; no credit card required</div>
+            <a className="d4-btn-primary" href="#">Get Started &rarr;</a>
           </div>
-          <div className="d4-showcase-visual">
-            <div className="d4-role-item">
-              <div className="d4-role-info">
-                <div className="d4-role-name">Admin</div>
-                <div className="d4-role-scope">Workspace governance, billing, members</div>
-              </div>
-              <div className="d4-role-badge">Full Access</div>
-            </div>
-            <div className="d4-role-item">
-              <div className="d4-role-info">
-                <div className="d4-role-name">Employee</div>
-                <div className="d4-role-scope">Projects, tasks, cycles, labels</div>
-              </div>
-              <div className="d4-role-badge">Build</div>
-            </div>
-            <div className="d4-role-item">
-              <div className="d4-role-info">
-                <div className="d4-role-name">Customer</div>
-                <div className="d4-role-scope">Portal, feedback, support tickets</div>
-              </div>
-              <div className="d4-role-badge">Portal</div>
-            </div>
+
+          <div className="d4-footer">
+            <span>&copy; 2025 Web Star OS</span>
+            <span>Designed with maximum precision</span>
           </div>
-        </div>
-
-        {/* TESTIMONIAL */}
-        <div className="d4-divider"><div className="d4-divider-diamond"></div></div>
-        <div className="d4-testimonial" id="testimonial">
-          <div className="d4-quote-mark">&ldquo;</div>
-          <p className="d4-quote-text">
-            We consolidated three separate tools into Web Star OS overnight.
-            The customer portal alone transformed how we handle feedback.
-          </p>
-          <div className="d4-quote-author">Sarah Chen &mdash; CTO, Modular Systems</div>
-        </div>
-
-        {/* CTA */}
-        <div className="d4-divider"><div className="d4-divider-diamond"></div></div>
-        <div className="d4-cta">
-          <h2 className="d4-cta-heading">
-            Your Team Deserves<br /><em>Better Tools</em>
-          </h2>
-          <p className="d4-cta-desc">Free for teams up to five. No credit card. Setup in minutes.</p>
-          <a className="d4-btn-gold" href="#">Start Your Free Trial &rarr;</a>
-        </div>
-
-        {/* FOOTER */}
-        <div className="d4-footer">
-          <span>&copy; 2025 Web Star OS</span>
-          <span>Crafted with intention</span>
         </div>
       </div>
     </>
