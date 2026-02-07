@@ -4,8 +4,12 @@ import { ConvexReactClient, ConvexProvider } from "convex/react";
 import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
 import { authClient } from "@/lib/auth-client";
 
+const convexUrl =
+  (globalThis as { process?: { env?: { EXPO_PUBLIC_CONVEX_URL?: string } } })
+    .process?.env?.EXPO_PUBLIC_CONVEX_URL ?? "";
+
 const convex = new ConvexReactClient(
-  process.env.EXPO_PUBLIC_CONVEX_URL as string,
+  convexUrl,
   {
     unsavedChangesWarning: false,
   },
