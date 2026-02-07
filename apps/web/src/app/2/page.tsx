@@ -37,14 +37,14 @@ export default function DesignTwo() {
           position: sticky; top: 0; z-index: 10; background: var(--bg);
         }
         .dk-logo {
-          font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+          font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em;
           text-transform: uppercase; color: var(--fg);
         }
         .dk-logo-dot { color: var(--accent); }
         .dk-links { display: flex; gap: 2.5rem; }
         .dk-links a {
           font-family: 'IBM Plex Mono', monospace;
-          font-size: 0.65rem; font-weight: 400; color: var(--dim);
+          font-size: 0.75rem; font-weight: 400; color: var(--dim);
           text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em;
           transition: color 0.25s;
         }
@@ -56,7 +56,7 @@ export default function DesignTwo() {
           border-bottom: 1px solid var(--rule);
         }
         .dk-hero-pre {
-          font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
+          font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
           text-transform: uppercase; letter-spacing: 0.35em; color: var(--dim);
           margin-bottom: 3rem;
           display: flex; align-items: center; gap: 1rem;
@@ -66,7 +66,7 @@ export default function DesignTwo() {
           background: var(--accent);
         }
         .dk-hero h1 {
-          font-size: clamp(2.5rem, 5vw, 4rem);
+          font-size: clamp(3rem, 6vw, 5rem);
           font-weight: 200;
           line-height: 1.2;
           letter-spacing: -0.02em;
@@ -77,14 +77,14 @@ export default function DesignTwo() {
           font-weight: 700;
         }
         .dk-hero-desc {
-          font-size: 0.9rem; line-height: 1.75; color: var(--dim);
-          max-width: 440px; font-weight: 300;
+          font-size: 1.05rem; line-height: 1.75; color: var(--dim);
+          max-width: 480px; font-weight: 300;
           margin-bottom: 3.5rem;
         }
         .dk-hero-actions { display: flex; gap: 1rem; align-items: center; }
         .dk-btn {
           font-family: 'Outfit', sans-serif;
-          font-size: 0.7rem; font-weight: 600;
+          font-size: 0.8rem; font-weight: 600;
           text-transform: uppercase; letter-spacing: 0.08em;
           padding: 0.9rem 2.2rem; text-decoration: none;
           transition: all 0.25s; cursor: pointer;
@@ -110,12 +110,12 @@ export default function DesignTwo() {
         }
         .dk-metric:last-child { border-right: none; }
         .dk-metric-val {
-          font-size: 2rem; font-weight: 700; letter-spacing: -0.03em;
+          font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em;
           margin-bottom: 0.5rem;
         }
         .dk-metric-val span { color: var(--accent); }
         .dk-metric-label {
-          font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem;
+          font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
           text-transform: uppercase; letter-spacing: 0.2em; color: var(--dim);
         }
 
@@ -125,7 +125,7 @@ export default function DesignTwo() {
           border-bottom: 1px solid var(--rule);
         }
         .dk-sec-label {
-          font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem;
+          font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
           text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim);
           margin-bottom: 4rem;
           display: flex; align-items: center; gap: 1rem;
@@ -140,14 +140,14 @@ export default function DesignTwo() {
         }
         .dk-feat-row:first-child { border-top: 1px solid var(--faint); }
         .dk-feat-idx {
-          font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
+          font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
           color: var(--dim);
         }
         .dk-feat-name {
-          font-size: 0.9rem; font-weight: 600; letter-spacing: 0.01em;
+          font-size: 1.05rem; font-weight: 600; letter-spacing: 0.01em;
         }
         .dk-feat-desc {
-          font-size: 0.8rem; font-weight: 300; line-height: 1.6; color: var(--dim);
+          font-size: 0.9rem; font-weight: 300; line-height: 1.6; color: var(--dim);
         }
 
         /* ── ROLES ── */
@@ -167,17 +167,17 @@ export default function DesignTwo() {
           display: flex; justify-content: space-between; align-items: baseline;
         }
         .dk-role-title {
-          font-size: 1.1rem; font-weight: 600;
+          font-size: 1.25rem; font-weight: 600;
         }
         .dk-role-tag {
-          font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem;
+          font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem;
           text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent);
         }
         .dk-role-text {
-          font-size: 0.8rem; font-weight: 300; line-height: 1.65; color: var(--dim);
+          font-size: 0.9rem; font-weight: 300; line-height: 1.65; color: var(--dim);
         }
         .dk-role-perms {
-          font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem;
+          font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
           color: var(--dim); line-height: 2.2;
         }
         .dk-perm-dot {
@@ -192,20 +192,20 @@ export default function DesignTwo() {
           border-bottom: 1px solid var(--rule);
         }
         .dk-cta h2 {
-          font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+          font-size: clamp(2.2rem, 4vw, 3.5rem);
           font-weight: 200; letter-spacing: -0.02em;
           margin-bottom: 1rem; line-height: 1.2;
         }
         .dk-cta h2 strong { font-weight: 700; }
         .dk-cta-sub {
-          font-size: 0.8rem; color: var(--dim); font-weight: 300;
+          font-size: 0.9rem; color: var(--dim); font-weight: 300;
           margin-bottom: 3rem;
         }
 
         /* ── FOOTER ── */
         .dk-footer {
           padding: 2rem 4rem; display: flex; justify-content: space-between;
-          font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem;
+          font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
           text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim);
         }
 
