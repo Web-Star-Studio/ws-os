@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { JSX } from "react";
 import { FormEvent, useMemo, useState } from "react";
@@ -19,8 +20,8 @@ export function AuthPanel(): JSX.Element {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const submitLabel = useMemo(() => {
-    return mode === "sign-in" ? "Entrar" : "Criar conta";
+  const title = useMemo(() => {
+    return mode === "sign-in" ? "LOGIN" : "CRIAR CONTA";
   }, [mode]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -36,13 +37,12 @@ export function AuthPanel(): JSX.Element {
           email,
           password,
         });
-
         if (result.error) {
-          setErrorMessage(result.error.message ?? "Falha ao criar conta");
+          setErrorMessage(result.error.message ?? "Falha ao criar conta.");
           return;
         }
-
-        setSuccessMessage("Conta criada com sucesso. Agora é só entrar.");
+        setSuccessMessage("Conta criada. Faça login para continuar.");
+        setMode("sign-in");
         return;
       }
 
@@ -50,16 +50,14 @@ export function AuthPanel(): JSX.Element {
         email,
         password,
       });
-
       if (result.error) {
-        setErrorMessage(result.error.message ?? "Falha ao entrar");
+        setErrorMessage(result.error.message ?? "Falha ao entrar.");
         return;
       }
-
       router.push("/projects");
       router.refresh();
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Erro inesperado");
+      setErrorMessage(error instanceof Error ? error.message : "Erro inesperado.");
     } finally {
       setLoading(false);
     }
@@ -67,37 +65,31 @@ export function AuthPanel(): JSX.Element {
 
   if (isPending) {
     return (
-      <aside className={styles.authPanel}>
-        <p className={styles.authInfo}>Carregando sessão...</p>
+      <aside className={styles.authPane}>
+        <p className={styles.authHint}>Carregando sessão...</p>
       </aside>
     );
   }
 
   if (session) {
     return (
-      <aside className={styles.authPanel}>
-        <p className={styles.authLabel}>Sessão ativa</p>
-        <h2 className={styles.authHeading}>Você já está autenticado.</h2>
-        <p className={styles.authInfo}>
-          Continue para seus projetos com seu perfil atual.
-        </p>
-        <div className={styles.authActions}>
+      <aside className={styles.authPane}>
+        <p className={styles.authLabel}>SESSÃO</p>
+        <h2 className={styles.authTitle}>VOCÊ JÁ ESTÁ LOGADO</h2>
+        <p className={styles.authHint}>Acesse o workspace para continuar.</p>
+        <div className={styles.authBottomRow}>
+          <Link className={styles.textLink} href="/projects">
+            ABRIR PROJETOS
+          </Link>
           <button
-            className={styles.authPrimary}
-            onClick={() => {
-              router.push("/projects");
-            }}
-          >
-            Abrir projetos
-          </button>
-          <button
-            className={styles.authSecondary}
+            className={styles.textLink}
+            type="button"
             onClick={async () => {
               await authClient.signOut();
               router.refresh();
             }}
           >
-            Sair
+            SAIR
           </button>
         </div>
       </aside>
@@ -105,64 +97,59 @@ export function AuthPanel(): JSX.Element {
   }
 
   return (
-    <aside className={styles.authPanel}>
-      <p className={styles.authLabel}>Acesso da plataforma</p>
-      <h2 className={styles.authHeading}>Entrar ou criar conta</h2>
-
-      <div className={styles.authTabs}>
-        <button
-          className={`${styles.authTab} ${mode === "sign-in" ? styles.authTabActive : ""}`}
-          onClick={() => setMode("sign-in")}
-          type="button"
-        >
-          Entrar
-        </button>
-        <button
-          className={`${styles.authTab} ${mode === "sign-up" ? styles.authTabActive : ""}`}
-          onClick={() => setMode("sign-up")}
-          type="button"
-        >
-          Criar conta
-        </button>
+    <aside className={styles.authPane}>
+      <div className={styles.authTopIcons} aria-hidden>
+        <span />
+        <span />
       </div>
+
+      <p className={styles.authLabel}>{title}</p>
 
       <form className={styles.authForm} onSubmit={onSubmit}>
         {mode === "sign-up" ? (
-          <label className={styles.authField}>
-            <span>Nome</span>
+          <label className={styles.lineField}>
+            <span>nome</span>
             <input
-              className={styles.authInput}
+              className={styles.lineInput}
               value={name}
               onChange={(event) => setName(event.target.value)}
+              placeholder="Seu nome"
               required
             />
           </label>
         ) : null}
 
-        <label className={styles.authField}>
-          <span>Email</span>
+        <label className={styles.lineField}>
+          <span>email</span>
           <input
-            className={styles.authInput}
+            className={styles.lineInput}
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            placeholder="seu@email.com"
             required
           />
+          <i className={styles.pinkDot} aria-hidden />
         </label>
 
-        <label className={styles.authField}>
-          <span>Senha</span>
+        <label className={styles.lineField}>
+          <span>senha</span>
           <input
-            className={styles.authInput}
+            className={styles.lineInput}
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            placeholder="••••••••"
             required
           />
         </label>
 
-        <button type="submit" className={styles.authPrimary} disabled={loading}>
-          {loading ? "Processando..." : submitLabel}
+        <p className={styles.authHint}>
+          {loading ? "PROCESSANDO..." : "DIGITE E PRESSIONE ENTER ↵"}
+        </p>
+
+        <button className={styles.submitButton} type="submit">
+          {mode === "sign-in" ? "ENTRAR" : "CRIAR CONTA"}
         </button>
       </form>
 
@@ -170,6 +157,24 @@ export function AuthPanel(): JSX.Element {
       {successMessage ? (
         <p className={styles.authSuccess}>{successMessage}</p>
       ) : null}
+
+      <footer className={styles.authBottomRow}>
+        <span>{`© ${new Date().getFullYear()} Web Star OS`}</span>
+        <button className={styles.textLink} type="button">
+          ESQUECI A SENHA
+        </button>
+        <button
+          className={styles.textLink}
+          type="button"
+          onClick={() => {
+            setMode((current) => (current === "sign-in" ? "sign-up" : "sign-in"));
+            setErrorMessage(null);
+            setSuccessMessage(null);
+          }}
+        >
+          {mode === "sign-in" ? "CRIAR CONTA" : "TENHO CONTA"}
+        </button>
+      </footer>
     </aside>
   );
 }

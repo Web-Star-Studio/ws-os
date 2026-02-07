@@ -1,13 +1,7 @@
 .page {
   min-height: 100vh;
-  padding: clamp(20px, 4vw, 52px);
-  background:
-    linear-gradient(0deg, rgba(250, 183, 214, 0.16) 1px, transparent 1px) 0 0 /
-      100% 28px,
-    linear-gradient(90deg, rgba(250, 183, 214, 0.16) 1px, transparent 1px) 0 0 /
-      28px 100%,
-    #120d14;
-  color: #f9eef6;
+  background: #ececef;
+  color: #2f2b3a;
   font-family:
     "Neue Haas Grotesk Text Pro",
     "Helvetica Neue",
@@ -16,217 +10,210 @@
     sans-serif;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: clamp(24px, 4vw, 56px);
-}
-
-.kicker {
-  margin: 0;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #f3bfd8;
-}
-
-.hero {
+.splitLayout {
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.9fr);
-  gap: clamp(14px, 2vw, 24px);
-  align-items: start;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
 }
 
-.heroCopy {
-  border: 2px solid #f3bfd8;
-  background: #18101b;
-  padding: clamp(20px, 3.6vw, 42px);
+.brandPane {
+  position: relative;
+  border-right: 1px solid #dad8df;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 18% 74%, rgba(208, 154, 220, 0.12), transparent 30%),
+    radial-gradient(circle at 70% 18%, rgba(208, 154, 220, 0.08), transparent 24%),
+    #ebeaf0;
+  overflow: hidden;
 }
 
-.label {
-  margin: 0 0 10px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: #f3bfd8;
+.brandLine {
+  position: absolute;
+  left: 8%;
+  top: 25%;
+  width: 2px;
+  height: 18%;
+  background: #d8d4df;
 }
 
-.hero h1 {
+.brandWord {
   margin: 0;
-  max-width: 100%;
-  font-size: clamp(44px, 8.8vw, 116px);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  font-size: clamp(78px, 11vw, 164px);
+  letter-spacing: -0.02em;
+  line-height: 0.78;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #34303f;
   text-transform: uppercase;
-  animation: rise 0.6s ease-out both;
 }
 
-.description {
-  max-width: 66ch;
-  margin: 18px 0 0;
-  font-size: clamp(16px, 1.8vw, 22px);
-  line-height: 1.52;
+.brandMeta {
+  position: absolute;
+  bottom: 24px;
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  color: #b7b3c0;
+  text-transform: uppercase;
 }
 
-.actions {
-  margin-top: 26px;
+.authPane {
+  padding: clamp(24px, 5vw, 70px);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  align-content: start;
+  gap: 22px;
+}
+
+.authTopIcons {
+  justify-self: end;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
-.primary,
-.secondary {
-  border: 2px solid #f3bfd8;
-  text-decoration: none;
-  padding: 11px 16px;
-  font-weight: 600;
-  background: transparent;
-  color: #f9eef6;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.primary {
-  background: #f3bfd8;
-  color: #120d14;
-}
-
-.primary:hover {
-  background: #f7cce1;
-}
-
-.secondary:hover {
-  background: #f3bfd8;
-  color: #120d14;
-}
-
-.authPanel {
-  border: 2px solid #f3bfd8;
-  background: #1b131d;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.authTopIcons span {
+  width: 11px;
+  height: 11px;
+  border: 1px solid #d6d3dd;
+  border-radius: 999px;
 }
 
 .authLabel {
   margin: 0;
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #f3bfd8;
+  font-size: 30px;
+  letter-spacing: 0.22em;
+  color: #7a7586;
 }
 
-.authHeading {
+.authTitle {
   margin: 0;
-  font-size: clamp(22px, 3vw, 34px);
-  line-height: 1.02;
+  font-size: clamp(24px, 3.2vw, 42px);
+  letter-spacing: 0.08em;
+  color: #474152;
   text-transform: uppercase;
-}
-
-.authInfo {
-  margin: 0;
-  color: #f4d8e8;
-  line-height: 1.4;
-}
-
-.authTabs {
-  display: flex;
-  gap: 8px;
-}
-
-.authTab {
-  border: 2px solid #f3bfd8;
-  background: transparent;
-  color: #f9eef6;
-  padding: 8px 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.authTabActive {
-  background: #f3bfd8;
-  color: #120d14;
 }
 
 .authForm {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  align-content: start;
+  gap: 22px;
 }
 
-.authField {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 13px;
+.lineField {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  border-bottom: 1px solid #cfcbd8;
+  padding-bottom: 10px;
 }
 
-.authInput {
+.lineField span {
+  font-size: 11px;
+  color: #a09bab;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.lineInput {
   width: 100%;
-  border: 2px solid #f3bfd8;
-  background: #120d14;
-  color: #f9eef6;
-  padding: 10px 11px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #7e788a;
+  font-size: clamp(33px, 4.1vw, 56px);
+  line-height: 1;
   outline: none;
 }
 
-.authInput:focus {
-  border-color: #f8d5e7;
+.lineInput::placeholder {
+  color: #bab5c4;
 }
 
-.authActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.pinkDot {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #cfa2dd;
 }
 
-.authPrimary,
-.authSecondary {
-  border: 2px solid #f3bfd8;
-  padding: 10px 12px;
+.authHint {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #b2adba;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  font-size: 12px;
-  cursor: pointer;
-  background: transparent;
-  color: #f9eef6;
 }
 
-.authPrimary {
-  background: #f3bfd8;
-  color: #120d14;
+.submitButton {
+  justify-self: start;
+  border: 1px solid #cdc9d7;
+  background: #f4f3f8;
+  color: #4e475c;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 9px 13px;
+  cursor: pointer;
 }
 
 .authError {
-  margin: 2px 0 0;
-  color: #ff8cb9;
+  margin: 0;
+  color: #b45572;
   font-size: 13px;
 }
 
 .authSuccess {
-  margin: 2px 0 0;
-  color: #f3bfd8;
+  margin: 0;
+  color: #6d6580;
   font-size: 13px;
 }
 
-@keyframes rise {
-  from {
-    transform: translateY(14px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.authBottomRow {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #d8d4de;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  color: #a5a0ae;
+  font-size: 12px;
 }
 
-@media (max-width: 980px) {
-  .hero {
+.textLink {
+  border: 0;
+  background: transparent;
+  color: #a5a0ae;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.textLink:hover {
+  color: #6e687e;
+}
+
+@media (max-width: 1000px) {
+  .splitLayout {
     grid-template-columns: 1fr;
+  }
+
+  .brandPane {
+    min-height: 42vh;
+    border-right: 0;
+    border-bottom: 1px solid #dad8df;
+  }
+
+  .brandWord {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: clamp(58px, 14vw, 120px);
   }
 }
