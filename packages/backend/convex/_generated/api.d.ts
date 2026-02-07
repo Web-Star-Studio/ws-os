@@ -8,8 +8,16 @@
  * @module
  */
 
+import type * as activity from "../activity.js";
 import type * as auth from "../auth.js";
+import type * as authz from "../authz.js";
+import type * as constants from "../constants.js";
+import type * as documents from "../documents.js";
 import type * as http from "../http.js";
+import type * as issues from "../issues.js";
+import type * as mentions from "../mentions.js";
+import type * as profiles from "../profiles.js";
+import type * as projects from "../projects.js";
 
 import type {
   ApiFromModules,
@@ -18,8 +26,16 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  activity: typeof activity;
   auth: typeof auth;
+  authz: typeof authz;
+  constants: typeof constants;
+  documents: typeof documents;
   http: typeof http;
+  issues: typeof issues;
+  mentions: typeof mentions;
+  profiles: typeof profiles;
+  projects: typeof projects;
 }>;
 
 /**

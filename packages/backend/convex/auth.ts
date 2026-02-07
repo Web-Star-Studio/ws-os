@@ -9,7 +9,9 @@ import authConfig from "./auth.config";
 
 export const authComponent = createClient<DataModel>(components.betterAuth);
 
-const siteUrl = process.env.SITE_URL!;
+const siteUrl =
+  (globalThis as { process?: { env?: { SITE_URL?: string } } }).process?.env
+    ?.SITE_URL ?? "http://localhost:3000";
 
 export const createAuth = (ctx: GenericCtx<DataModel>) => {
   return betterAuth({
@@ -27,25 +29,13 @@ export const getCurrentUser = query({
   args: {},
   returns: v.union(
     v.object({
-      user: v.object({
-        id: v.string(),
-        name: v.string(),
-        email: v.string(),
-        emailVerified: v.boolean(),
-        image: v.optional(v.union(v.string(), v.null())),
-        createdAt: v.number(),
-        updatedAt: v.number(),
-      }),
-      session: v.object({
-        id: v.string(),
-        userId: v.string(),
-        token: v.string(),
-        expiresAt: v.number(),
-        ipAddress: v.optional(v.union(v.string(), v.null())),
-        userAgent: v.optional(v.union(v.string(), v.null())),
-        createdAt: v.number(),
-        updatedAt: v.number(),
-      }),
+      id: v.string(),
+      name: v.string(),
+      email: v.string(),
+      emailVerified: v.boolean(),
+      image: v.optional(v.union(v.string(), v.null())),
+      createdAt: v.number(),
+      updatedAt: v.number(),
     }),
     v.null(),
   ),
@@ -53,25 +43,13 @@ export const getCurrentUser = query({
     try {
       const authUser = await authComponent.getAuthUser(ctx);
       return {
-        user: {
-          id: authUser.user.id,
-          name: authUser.user.name,
-          email: authUser.user.email,
-          emailVerified: authUser.user.emailVerified,
-          image: authUser.user.image ?? null,
-          createdAt: authUser.user.createdAt,
-          updatedAt: authUser.user.updatedAt,
-        },
-        session: {
-          id: authUser.session.id,
-          userId: authUser.session.userId,
-          token: authUser.session.token,
-          expiresAt: authUser.session.expiresAt,
-          ipAddress: authUser.session.ipAddress ?? null,
-          userAgent: authUser.session.userAgent ?? null,
-          createdAt: authUser.session.createdAt,
-          updatedAt: authUser.session.updatedAt,
-        },
+        id: authUser.userId ?? authUser._id,
+        name: authUser.name,
+        email: authUser.email,
+        emailVerified: authUser.emailVerified,
+        image: authUser.image ?? null,
+        createdAt: authUser.createdAt,
+        updatedAt: authUser.updatedAt,
       };
     } catch {
       return null;
