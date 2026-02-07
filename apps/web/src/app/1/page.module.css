@@ -2,12 +2,12 @@
   min-height: 100vh;
   padding: clamp(20px, 4vw, 52px);
   background:
-    linear-gradient(0deg, rgba(15, 17, 20, 0.08) 1px, transparent 1px) 0 0 /
+    linear-gradient(0deg, rgba(250, 183, 214, 0.16) 1px, transparent 1px) 0 0 /
       100% 28px,
-    linear-gradient(90deg, rgba(15, 17, 20, 0.08) 1px, transparent 1px) 0 0 /
+    linear-gradient(90deg, rgba(250, 183, 214, 0.16) 1px, transparent 1px) 0 0 /
       28px 100%,
-    #f4f4f0;
-  color: #101010;
+    #120d14;
+  color: #f9eef6;
   font-family:
     "Neue Haas Grotesk Text Pro",
     "Helvetica Neue",
@@ -28,11 +28,12 @@
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  color: #f3bfd8;
 }
 
 .variantNav {
   display: flex;
-  border: 2px solid #121212;
+  border: 2px solid #f3bfd8;
 }
 
 .link,
@@ -42,8 +43,8 @@
   display: grid;
   place-items: center;
   text-decoration: none;
-  border-left: 2px solid #121212;
-  color: #121212;
+  border-left: 2px solid #f3bfd8;
+  color: #f9eef6;
   font-size: 13px;
 }
 
@@ -52,8 +53,8 @@
 }
 
 .activeLink {
-  background: #121212;
-  color: #f4f4f0;
+  background: #f3bfd8;
+  color: #120d14;
 }
 
 .hero h1 {
@@ -71,6 +72,7 @@
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.18em;
+  color: #f3bfd8;
 }
 
 .description {
@@ -89,18 +91,28 @@
 
 .primary,
 .secondary {
-  border: 2px solid #121212;
+  border: 2px solid #f3bfd8;
   text-decoration: none;
   padding: 11px 16px;
   font-weight: 600;
   background: transparent;
-  color: #101010;
+  color: #f9eef6;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .primary {
-  background: #101010;
-  color: #f4f4f0;
+  background: #f3bfd8;
+  color: #120d14;
+}
+
+.primary:hover {
+  background: #f7cce1;
+}
+
+.secondary:hover {
+  background: #f3bfd8;
+  color: #120d14;
 }
 
 .grid {
@@ -111,8 +123,8 @@
 }
 
 .panel {
-  border: 2px solid #121212;
-  background: #f9f9f6;
+  border: 2px solid #f3bfd8;
+  background: #1b131d;
   padding: 16px;
 }
 
@@ -121,6 +133,7 @@
   font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  color: #f3bfd8;
 }
 
 .panel ul {
@@ -134,6 +147,7 @@
   margin: 0 0 6px;
   font-size: clamp(42px, 8vw, 78px);
   line-height: 0.9;
+  color: #f3bfd8;
 }
 
 @keyframes rise {

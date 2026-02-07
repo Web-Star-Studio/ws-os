@@ -8,7 +8,7 @@ export default function LandingVariantOne(): JSX.Element {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <p className={styles.kicker}>WS OS / Swiss Study 01</p>
+        <p className={styles.kicker}>WS OS / Operating System 01</p>
         <nav className={styles.variantNav} aria-label="Landing variants">
           {variants.map((variant) => (
             <Link
@@ -23,39 +23,43 @@ export default function LandingVariantOne(): JSX.Element {
       </header>
 
       <section className={styles.hero}>
-        <p className={styles.label}>Project Work Management</p>
-        <h1>Zero noise. Full delivery control.</h1>
+        <p className={styles.label}>Project Execution Platform</p>
+        <h1>Ship complex work without status noise.</h1>
         <p className={styles.description}>
-          Build projects, drop documents, and ship issues from one rigid
-          workspace built for employee and admin teams.
+          WS OS gives admins and employees one command surface for project
+          context, documents, and issue delivery, so every deadline has an
+          owner and every update has proof.
         </p>
         <div className={styles.actions}>
           <Link href="/projects" className={styles.primary}>
-            Open Workspace
+            Start in Projects
           </Link>
-          <button className={styles.secondary}>Request Demo</button>
+          <button className={styles.secondary}>Book 15-min Demo</button>
         </div>
       </section>
 
       <section className={styles.grid}>
         <article className={styles.panel}>
-          <h2>Core block</h2>
+          <h2>System layer</h2>
           <ul>
-            <li>Project spaces with structured details</li>
-            <li>Issue tracking in board and table views</li>
-            <li>Dedicated issue pages with due dates and mentions</li>
+            <li>Project spaces with structured delivery context</li>
+            <li>Linear-style issues in board and table views</li>
+            <li>Issue pages with mentions, files, and due dates</li>
           </ul>
         </article>
         <article className={styles.panel}>
-          <h2>Signal</h2>
-          <p className={styles.number}>+46%</p>
-          <p>Faster issue turnover after moving teams into one operating rail.</p>
+          <h2>Outcome</h2>
+          <p className={styles.number}>2.4x</p>
+          <p>
+            Higher issue completion velocity after replacing scattered tools
+            with one execution surface.
+          </p>
         </article>
         <article className={styles.panel}>
-          <h2>Rhythm</h2>
-          <p>Morning triage</p>
-          <p>Midday delivery updates</p>
-          <p>Evening archive and review</p>
+          <h2>Cadence</h2>
+          <p>Plan project scope in one place</p>
+          <p>Execute daily in board or table mode</p>
+          <p>Review delivery risk before deadlines slip</p>
         </article>
       </section>
     </main>
