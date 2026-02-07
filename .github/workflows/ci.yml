@@ -32,13 +32,13 @@ jobs:
             turbo-${{ runner.os }}-
 
       - name: Lint
-        run: turbo run lint --affected
+        run: bun run lint --affected
 
       - name: Type Check
-        run: turbo run type-check --affected
+        run: bun run type-check --affected
 
       - name: Build
-        run: turbo run build --affected
+        run: bun run build --affected
 
   e2e:
     name: E2E Tests
