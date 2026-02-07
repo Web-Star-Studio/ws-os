@@ -4,8 +4,13 @@ import { expoClient } from "@better-auth/expo/client";
 import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
 
+const convexSiteUrl =
+  (globalThis as {
+    process?: { env?: { EXPO_PUBLIC_CONVEX_SITE_URL?: string } };
+  }).process?.env?.EXPO_PUBLIC_CONVEX_SITE_URL ?? "";
+
 export const authClient = createAuthClient({
-  baseURL: process.env.EXPO_PUBLIC_CONVEX_SITE_URL,
+  baseURL: convexSiteUrl,
   plugins: [
     expoClient({
       scheme: Constants.expoConfig?.scheme as string,

@@ -10,12 +10,17 @@ jobs:
   ci:
     name: Lint, Type Check & Build
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_CONVEX_URL: https://example.convex.cloud
+      NEXT_PUBLIC_CONVEX_SITE_URL: https://example.convex.site
+      CONVEX_SITE_URL: https://example.convex.site
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -32,18 +37,23 @@ jobs:
             turbo-${{ runner.os }}-
 
       - name: Lint
-        run: turbo run lint --affected
+        run: bun run lint --affected
 
       - name: Type Check
-        run: turbo run type-check --affected
+        run: bun run type-check --affected
 
       - name: Build
-        run: turbo run build --affected
+        run: bun run build --affected
 
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
     needs: ci
+    env:
+      NEXT_PUBLIC_CONVEX_URL: ${{ vars.NEXT_PUBLIC_CONVEX_URL || secrets.NEXT_PUBLIC_CONVEX_URL || '' }}
+      NEXT_PUBLIC_CONVEX_SITE_URL: ${{ vars.NEXT_PUBLIC_CONVEX_SITE_URL || secrets.NEXT_PUBLIC_CONVEX_SITE_URL || '' }}
+      CONVEX_SITE_URL: ${{ vars.CONVEX_SITE_URL || secrets.CONVEX_SITE_URL || '' }}
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
 
     steps:
       - name: Checkout
@@ -58,12 +68,27 @@ jobs:
       - name: Install Playwright browsers
         run: bun x playwright install --with-deps chromium
 
+      - name: Validate E2E environment
+        id: validate_e2e_env
+        run: |
+          if [ -z "${NEXT_PUBLIC_CONVEX_URL}" ] || [ -z "${NEXT_PUBLIC_CONVEX_SITE_URL}" ]; then
+            echo "run_e2e=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping E2E: missing NEXT_PUBLIC_CONVEX_URL or NEXT_PUBLIC_CONVEX_SITE_URL."
+          else
+            echo "run_e2e=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run E2E tests
+        if: steps.validate_e2e_env.outputs.run_e2e == 'true'
         run: bun run test:e2e --project=chromium
+
+      - name: Skip E2E (env missing)
+        if: steps.validate_e2e_env.outputs.run_e2e != 'true'
+        run: echo "E2E skipped because Convex environment variables are not configured in repo vars/secrets."
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.validate_e2e_env.outputs.run_e2e == 'true' }}
         with:
           name: playwright-report
           path: apps/e2e/playwright-report/

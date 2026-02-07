@@ -13,7 +13,7 @@ export default function HomeScreen() {
       </Text>
 
       {user ? (
-        <Text style={styles.info}>Welcome, {user.user?.email ?? "User"}!</Text>
+        <Text style={styles.info}>Welcome, {user.email ?? "User"}!</Text>
       ) : (
         <Text style={styles.info}>
           Set up your Convex backend to enable authentication.

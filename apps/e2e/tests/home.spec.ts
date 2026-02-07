@@ -1,15 +1,12 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Home Page", () => {
-  test("should display the landing page", async ({ page }) => {
+  test("should display auth entry page", async ({ page }) => {
     await page.goto("/");
+    await expect(page.getByRole("heading", { name: "Project Work Management" })).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "WS Starter" }),
+      page.locator(".tab-row").getByRole("button", { name: "Sign in" }),
     ).toBeVisible();
-  });
-
-  test("should show unauthenticated state by default", async ({ page }) => {
-    await page.goto("/");
-    await expect(page.getByText("You are not signed in")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Sign up" })).toBeVisible();
   });
 });

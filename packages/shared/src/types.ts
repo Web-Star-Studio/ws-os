@@ -6,6 +6,11 @@
 export type AppUser = {
   id: string;
   email: string;
-  name?: string;
-  image?: string;
+  name: string;
+  image?: string | null;
+};
+
+export type ViewerProfile = AppUser & {
+  role: "admin" | "employee";
+  handle: string;
 };
