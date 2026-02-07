@@ -3,33 +3,23 @@
 import { useMutation, useQuery } from "convex/react";
 import type { Id } from "@ws/backend/convex/_generated/dataModel";
 import { useRouter } from "next/navigation";
-import {
-  DragEvent,
-  FormEvent,
-  useEffect,
-  type JSX,
-  useMemo,
-  useState,
-} from "react";
+import { useEffect, type JSX, useState } from "react";
 import { api } from "@ws/backend/convex/_generated/api";
-import type { IssueStatus } from "@ws/shared";
-import { ISSUE_STATUS_LABELS, ISSUE_STATUS_ORDER } from "@ws/shared";
 import { AppShell } from "@/components/AppShell";
+import { ProjectDocumentsTab } from "@/components/projects/ProjectDocumentsTab";
+import { ProjectHeader } from "@/components/projects/ProjectHeader";
+import { ProjectIssuesTab } from "@/components/projects/ProjectIssuesTab";
+import { ProjectMembersCard } from "@/components/projects/ProjectMembersCard";
+import { ProjectOverviewTab } from "@/components/projects/ProjectOverviewTab";
+import type { ProjectTab } from "@/components/projects/project-types";
 import { authClient } from "@/lib/auth-client";
 
-type ProjectTab = "overview" | "documents" | "issues";
-type IssueView = "kanban" | "table";
-
-function formatDateTime(timestamp: number): string {
-  return new Date(timestamp).toLocaleString();
-}
-
-function formatDate(timestamp: number | null | undefined): string {
-  if (!timestamp) {
-    return "-";
-  }
-  return new Date(timestamp).toLocaleDateString();
-}
+type Feedback =
+  | {
+      kind: "success" | "error";
+      text: string;
+    }
+  | null;
 
 export default function ProjectDetailPage({
   params,
@@ -75,22 +65,7 @@ export default function ProjectDetailPage({
   const deleteProjectDocument = useMutation(api.documents.deleteProjectDocument);
 
   const [tab, setTab] = useState<ProjectTab>("overview");
-  const [issueView, setIssueView] = useState<IssueView>("kanban");
-  const [description, setDescription] = useState("");
-  const [issueTitle, setIssueTitle] = useState("");
-  const [issueDescription, setIssueDescription] = useState("");
-  const [issueDueDate, setIssueDueDate] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [projectMessage, setProjectMessage] = useState<string | null>(null);
-  const [docMessage, setDocMessage] = useState<string | null>(null);
-  const [issueMessage, setIssueMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [tableSortBy, setTableSortBy] = useState<
-    "title" | "status" | "dueDate" | "updatedAt"
-  >("updatedAt");
-  const [tableSortDirection, setTableSortDirection] = useState<"asc" | "desc">(
-    "desc",
-  );
+  const [feedback, setFeedback] = useState<Feedback>(null);
 
   useEffect(() => {
     if (!isPending && !session) {
@@ -102,43 +77,122 @@ export default function ProjectDetailPage({
     }
   }, [ensureProfile, isPending, router, session]);
 
-  useEffect(() => {
-    if (project) {
-      setDescription(project.description);
-    }
-  }, [project]);
+  function setSuccess(text: string): void {
+    setFeedback({ kind: "success", text });
+  }
 
-  useEffect(() => {
-    const stored = localStorage.getItem(`issue-view-${projectId}`);
-    if (stored === "kanban" || stored === "table") {
-      setIssueView(stored);
-    }
-  }, [projectId]);
-
-  useEffect(() => {
-    localStorage.setItem(`issue-view-${projectId}`, issueView);
-  }, [issueView, projectId]);
-
-  const issuesForTable = useMemo(() => {
-    if (!tableIssues) {
-      return [];
-    }
-    const rows = [...tableIssues];
-    rows.sort((a, b) => {
-      const direction = tableSortDirection === "asc" ? 1 : -1;
-      if (tableSortBy === "title") {
-        return a.title.localeCompare(b.title) * direction;
-      }
-      if (tableSortBy === "status") {
-        return a.status.localeCompare(b.status) * direction;
-      }
-      if (tableSortBy === "dueDate") {
-        return ((a.dueDate ?? 0) - (b.dueDate ?? 0)) * direction;
-      }
-      return (a.updatedAt - b.updatedAt) * direction;
+  function setError(error: unknown, fallback: string): void {
+    setFeedback({
+      kind: "error",
+      text: error instanceof Error ? error.message : fallback,
     });
-    return rows;
-  }, [tableIssues, tableSortBy, tableSortDirection]);
+  }
+
+  async function handleArchiveProject(): Promise<void> {
+    try {
+      await archiveProject({ projectId });
+      setSuccess("Project archived.");
+    } catch (error) {
+      setError(error, "Could not archive project.");
+    }
+  }
+
+  async function handleSaveOverview(description: string): Promise<void> {
+    try {
+      await updateProjectDetails({ projectId, description });
+      setSuccess("Project details saved.");
+    } catch (error) {
+      setError(error, "Save failed.");
+    }
+  }
+
+  async function handleUploadProjectDocument(file: File): Promise<void> {
+    try {
+      const uploadUrl = await generateUploadUrl({});
+      const uploadResponse = await fetch(uploadUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": file.type || "application/octet-stream",
+        },
+        body: file,
+      });
+      if (!uploadResponse.ok) {
+        throw new Error("File upload failed.");
+      }
+      const uploadResult = (await uploadResponse.json()) as {
+        storageId: Id<"_storage">;
+      };
+      await createProjectDocument({
+        projectId,
+        filename: file.name,
+        storageId: uploadResult.storageId,
+        size: file.size,
+        contentType: file.type,
+      });
+      setSuccess("Document uploaded.");
+    } catch (error) {
+      setError(error, "Upload failed.");
+    }
+  }
+
+  async function handleRenameDocument(
+    documentId: string,
+    filename: string,
+  ): Promise<void> {
+    try {
+      await renameProjectDocument({
+        documentId: documentId as Id<"projectDocuments">,
+        filename,
+      });
+      setSuccess("Document renamed.");
+    } catch (error) {
+      setError(error, "Rename failed.");
+    }
+  }
+
+  async function handleDeleteDocument(documentId: string): Promise<void> {
+    try {
+      await deleteProjectDocument({
+        documentId: documentId as Id<"projectDocuments">,
+      });
+      setSuccess("Document deleted.");
+    } catch (error) {
+      setError(error, "Delete failed.");
+    }
+  }
+
+  async function handleCreateIssue(args: {
+    title: string;
+    description: string;
+    dueDate: number | null;
+  }): Promise<void> {
+    try {
+      await createIssue({
+        projectId,
+        title: args.title,
+        description: args.description,
+        dueDate: args.dueDate,
+      });
+      setSuccess("Issue created.");
+    } catch (error) {
+      setError(error, "Issue not created.");
+    }
+  }
+
+  async function handleMoveIssueStatus(
+    issueId: string,
+    status: "backlog" | "todo" | "in_progress" | "done",
+  ): Promise<void> {
+    try {
+      await moveIssueStatus({
+        issueId: issueId as Id<"issues">,
+        status,
+      });
+      setSuccess("Issue moved.");
+    } catch (error) {
+      setError(error, "Move failed.");
+    }
+  }
 
   if (isPending || !session) {
     return (
@@ -169,430 +223,52 @@ export default function ProjectDetailPage({
     );
   }
 
-  async function onSaveOverview(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setError(null);
-    setProjectMessage(null);
-    try {
-      await updateProjectDetails({
-        projectId,
-        description,
-      });
-      setProjectMessage("Project details saved.");
-    } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "Save failed");
-    }
-  }
-
-  async function onUploadProjectDocument(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setError(null);
-    setDocMessage(null);
-    if (!selectedFile) {
-      setError("Choose a file first.");
-      return;
-    }
-    try {
-      const uploadUrl = await generateUploadUrl({});
-      const uploadResponse = await fetch(uploadUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": selectedFile.type || "application/octet-stream",
-        },
-        body: selectedFile,
-      });
-
-      if (!uploadResponse.ok) {
-        throw new Error("File upload failed.");
-      }
-
-      const uploadResult = (await uploadResponse.json()) as {
-        storageId: Id<"_storage">;
-      };
-
-      await createProjectDocument({
-        projectId,
-        filename: selectedFile.name,
-        storageId: uploadResult.storageId,
-        size: selectedFile.size,
-        contentType: selectedFile.type,
-      });
-
-      setSelectedFile(null);
-      setDocMessage("Document uploaded.");
-    } catch (uploadError) {
-      setError(
-        uploadError instanceof Error ? uploadError.message : "Upload failed",
-      );
-    }
-  }
-
-  async function onCreateIssue(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setIssueMessage(null);
-    setError(null);
-    try {
-      await createIssue({
-        projectId,
-        title: issueTitle,
-        description: issueDescription,
-        dueDate: issueDueDate
-          ? new Date(`${issueDueDate}T00:00:00`).getTime()
-          : null,
-      });
-      setIssueTitle("");
-      setIssueDescription("");
-      setIssueDueDate("");
-      setIssueMessage("Issue created.");
-    } catch (createError) {
-      setError(
-        createError instanceof Error ? createError.message : "Issue not created",
-      );
-    }
-  }
-
-  async function onDropToStatus(event: DragEvent<HTMLElement>, status: IssueStatus) {
-    event.preventDefault();
-    const issueId = event.dataTransfer.getData("text/plain") as Id<"issues">;
-    if (!issueId) {
-      return;
-    }
-    try {
-      await moveIssueStatus({ issueId, status });
-    } catch (dropError) {
-      setError(dropError instanceof Error ? dropError.message : "Move failed");
-    }
-  }
-
   return (
     <AppShell title={`${project.key} · ${project.name}`}>
       <section className="card stack">
-        <div className="row" style={{ justifyContent: "space-between" }}>
-          <div>
-            <h1 style={{ margin: 0 }}>{project.name}</h1>
-            <p className="muted" style={{ margin: 0 }}>
-              {project.key} · Owner {project.ownerName}
-            </p>
-          </div>
-          <div className="row">
-            <span className="status-pill">{project.status}</span>
-            {viewerProfile?.role === "admin" && project.status !== "archived" ? (
-              <button
-                className="button danger"
-                onClick={async () => {
-                  await archiveProject({ projectId });
-                  setProjectMessage("Project archived.");
-                }}
-              >
-                Archive project
-              </button>
-            ) : null}
-          </div>
-        </div>
+        <ProjectHeader
+          project={project}
+          viewerRole={viewerProfile?.role}
+          tab={tab}
+          onTabChange={setTab}
+          onArchive={handleArchiveProject}
+        />
 
-        <div className="tab-row">
-          <button
-            className={`tab-button ${tab === "overview" ? "active" : ""}`}
-            onClick={() => setTab("overview")}
-          >
-            Overview
-          </button>
-          <button
-            className={`tab-button ${tab === "documents" ? "active" : ""}`}
-            onClick={() => setTab("documents")}
-          >
-            Documents
-          </button>
-          <button
-            className={`tab-button ${tab === "issues" ? "active" : ""}`}
-            onClick={() => setTab("issues")}
-          >
-            Issues
-          </button>
-        </div>
-
-        {error ? <p className="error">{error}</p> : null}
-        {projectMessage ? <p className="success">{projectMessage}</p> : null}
-        {docMessage ? <p className="success">{docMessage}</p> : null}
-        {issueMessage ? <p className="success">{issueMessage}</p> : null}
+        {feedback ? (
+          <p className={feedback.kind === "success" ? "success" : "error"}>
+            {feedback.text}
+          </p>
+        ) : null}
 
         {tab === "overview" ? (
-          <form className="stack" onSubmit={onSaveOverview}>
-            <label className="stack">
-              <span>Project details</span>
-              <textarea
-                className="textarea"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </label>
-            <button className="button primary" type="submit">
-              Save details
-            </button>
-          </form>
+          <ProjectOverviewTab
+            description={project.description}
+            onSave={handleSaveOverview}
+          />
         ) : null}
 
         {tab === "documents" ? (
-          <div className="stack">
-            <form className="row" onSubmit={onUploadProjectDocument}>
-              <input
-                type="file"
-                onChange={(event) =>
-                  setSelectedFile(event.target.files?.[0] ?? null)
-                }
-              />
-              <button type="submit" className="button primary">
-                Upload
-              </button>
-            </form>
-            {!documents ? <p>Loading documents...</p> : null}
-            {documents ? (
-              <div className="stack">
-                {documents.length === 0 ? (
-                  <p className="muted">No documents yet.</p>
-                ) : null}
-                {documents.map((document) => (
-                  <article
-                    key={document.id}
-                    className="card row"
-                    style={{ justifyContent: "space-between" }}
-                  >
-                    <div className="stack" style={{ gap: 4 }}>
-                      <strong>{document.filename}</strong>
-                      <small className="muted">
-                        {Math.round(document.size / 1024)} KB ·{" "}
-                        {formatDateTime(document.uploadedAt)}
-                      </small>
-                    </div>
-                    <div className="row">
-                      {document.fileUrl ? (
-                        <a
-                          className="button"
-                          href={document.fileUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Open
-                        </a>
-                      ) : null}
-                      <button
-                        className="button"
-                        onClick={async () => {
-                          const nextFilename = prompt(
-                            "Rename document",
-                            document.filename,
-                          );
-                          if (!nextFilename) {
-                            return;
-                          }
-                          await renameProjectDocument({
-                            documentId: document.id,
-                            filename: nextFilename,
-                          });
-                        }}
-                      >
-                        Rename
-                      </button>
-                      <button
-                        className="button danger"
-                        onClick={async () => {
-                          await deleteProjectDocument({
-                            documentId: document.id,
-                          });
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            ) : null}
-          </div>
+          <ProjectDocumentsTab
+            documents={documents}
+            onUpload={handleUploadProjectDocument}
+            onRename={handleRenameDocument}
+            onDelete={handleDeleteDocument}
+          />
         ) : null}
 
         {tab === "issues" ? (
-          <div className="stack">
-            <form className="card stack" onSubmit={onCreateIssue}>
-              <h2 style={{ margin: 0 }}>Create issue</h2>
-              <label className="stack">
-                <span>Title</span>
-                <input
-                  className="input"
-                  value={issueTitle}
-                  onChange={(e) => setIssueTitle(e.target.value)}
-                  required
-                />
-              </label>
-              <label className="stack">
-                <span>Description</span>
-                <textarea
-                  className="textarea"
-                  value={issueDescription}
-                  onChange={(e) => setIssueDescription(e.target.value)}
-                />
-              </label>
-              <label className="stack">
-                <span>Due date</span>
-                <input
-                  className="input"
-                  type="date"
-                  value={issueDueDate}
-                  onChange={(e) => setIssueDueDate(e.target.value)}
-                />
-              </label>
-              <button className="button primary" type="submit">
-                Add issue
-              </button>
-            </form>
-
-            <div className="row" style={{ justifyContent: "space-between" }}>
-              <h2 style={{ margin: 0 }}>Issues</h2>
-              <div className="tab-row">
-                <button
-                  className={`tab-button ${
-                    issueView === "kanban" ? "active" : ""
-                  }`}
-                  onClick={() => setIssueView("kanban")}
-                >
-                  Kanban
-                </button>
-                <button
-                  className={`tab-button ${
-                    issueView === "table" ? "active" : ""
-                  }`}
-                  onClick={() => setIssueView("table")}
-                >
-                  Table
-                </button>
-              </div>
-            </div>
-
-            {issueView === "kanban" ? (
-              <div className="kanban">
-                {ISSUE_STATUS_ORDER.map((status) => (
-                  <section
-                    key={status}
-                    className="kanban-column"
-                    onDragOver={(event) => event.preventDefault()}
-                    onDrop={(event) => onDropToStatus(event, status)}
-                  >
-                    <strong>{ISSUE_STATUS_LABELS[status]}</strong>
-                    {(boardIssues ?? [])
-                      .filter((issue) => issue.status === status)
-                      .map((issue) => (
-                        <article
-                          key={issue.id}
-                          className="kanban-card stack"
-                          draggable
-                          onDragStart={(event) =>
-                            event.dataTransfer.setData("text/plain", issue.id)
-                          }
-                        >
-                          <strong>{issue.title}</strong>
-                          <small className="muted">
-                            Due: {formatDate(issue.dueDate)}
-                          </small>
-                          <a href={`/projects/${project.id}/issues/${issue.id}`}>
-                            Open issue
-                          </a>
-                        </article>
-                      ))}
-                  </section>
-                ))}
-              </div>
-            ) : null}
-
-            {issueView === "table" ? (
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>
-                        <button
-                          className="button"
-                          onClick={() => {
-                            setTableSortBy("title");
-                            setTableSortDirection(
-                              tableSortDirection === "asc" ? "desc" : "asc",
-                            );
-                          }}
-                        >
-                          Title
-                        </button>
-                      </th>
-                      <th>
-                        <button
-                          className="button"
-                          onClick={() => {
-                            setTableSortBy("status");
-                            setTableSortDirection(
-                              tableSortDirection === "asc" ? "desc" : "asc",
-                            );
-                          }}
-                        >
-                          Status
-                        </button>
-                      </th>
-                      <th>
-                        <button
-                          className="button"
-                          onClick={() => {
-                            setTableSortBy("dueDate");
-                            setTableSortDirection(
-                              tableSortDirection === "asc" ? "desc" : "asc",
-                            );
-                          }}
-                        >
-                          Due
-                        </button>
-                      </th>
-                      <th>
-                        <button
-                          className="button"
-                          onClick={() => {
-                            setTableSortBy("updatedAt");
-                            setTableSortDirection(
-                              tableSortDirection === "asc" ? "desc" : "asc",
-                            );
-                          }}
-                        >
-                          Updated
-                        </button>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {issuesForTable.map((issue) => (
-                      <tr key={issue.id}>
-                        <td>
-                          <a href={`/projects/${project.id}/issues/${issue.id}`}>
-                            {issue.title}
-                          </a>
-                        </td>
-                        <td>{ISSUE_STATUS_LABELS[issue.status]}</td>
-                        <td>{formatDate(issue.dueDate)}</td>
-                        <td>{formatDateTime(issue.updatedAt)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : null}
-          </div>
+          <ProjectIssuesTab
+            projectId={project.id}
+            boardIssues={boardIssues}
+            tableIssues={tableIssues}
+            onCreateIssue={handleCreateIssue}
+            onMoveIssueStatus={handleMoveIssueStatus}
+          />
         ) : null}
       </section>
 
-      <section className="card stack" style={{ marginTop: 16 }}>
-        <h2 style={{ margin: 0 }}>Project members</h2>
-        <div className="row" style={{ flexWrap: "wrap" }}>
-          {(members ?? []).map((member) => (
-            <span key={member.userId} className="status-pill">
-              @{member.handle} · {member.name}
-            </span>
-          ))}
-        </div>
-      </section>
+      <ProjectMembersCard members={members} />
     </AppShell>
   );
 }
+
