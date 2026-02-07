@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
+import type { JSX, ReactNode } from "react";
 import { ConvexClientProvider } from "./ConvexClientProvider";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "WS Starter",
-  description: "Fullstack monorepo starter with Next.js, Expo, and Convex",
+  title: "WS OS",
+  description: "Project work management workspace",
 };
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
-}) {
+  children: ReactNode;
+}): JSX.Element {
   return (
     <html lang="en">
       <body>
