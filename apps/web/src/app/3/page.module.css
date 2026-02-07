@@ -1,0 +1,144 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(0, 150, 120, 0.18), transparent 40%),
+    #ecece8;
+  color: #0d0d0d;
+  padding: clamp(20px, 4vw, 48px);
+  font-family:
+    "Suisse Intl",
+    "Helvetica Neue",
+    "Nimbus Sans L",
+    "Liberation Sans",
+    sans-serif;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #0d0d0d;
+  padding-bottom: 14px;
+}
+
+.topbar p {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+
+.topbar nav {
+  display: flex;
+  gap: 8px;
+}
+
+.link,
+.activeLink {
+  text-decoration: none;
+  border: 2px solid #0d0d0d;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #0d0d0d;
+}
+
+.activeLink {
+  background: #0d0d0d;
+  color: #ecece8;
+}
+
+.hero {
+  margin-top: clamp(24px, 5vw, 64px);
+  display: grid;
+  gap: 14px;
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 13ch;
+  font-size: clamp(36px, 8vw, 90px);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.hero p {
+  margin: 0;
+  font-size: clamp(15px, 2vw, 20px);
+  max-width: 50ch;
+}
+
+.body {
+  margin-top: clamp(28px, 6vw, 70px);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 14px;
+}
+
+.left,
+.right {
+  border: 2px solid #0d0d0d;
+  background: #f7f7f4;
+  padding: 16px;
+}
+
+.mono {
+  margin: 0;
+  font-size: 12px;
+  font-family:
+    "Suisse Intl Mono",
+    "IBM Plex Mono",
+    "Fira Code",
+    monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.left ul {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.cta {
+  margin-top: 20px;
+  display: inline-block;
+  text-decoration: none;
+  color: #f7f7f4;
+  background: #0d0d0d;
+  border: 2px solid #0d0d0d;
+  padding: 10px 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+}
+
+.metricLabel {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.metric {
+  margin: 16px 0 4px;
+  font-size: clamp(56px, 10vw, 104px);
+  line-height: 0.86;
+  font-family:
+    "Suisse Intl Mono",
+    "IBM Plex Mono",
+    monospace;
+}
+
+.metricCopy {
+  margin: 0;
+  max-width: 24ch;
+}
+
+@media (max-width: 900px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+}
