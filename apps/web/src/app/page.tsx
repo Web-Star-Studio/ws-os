@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Web Star OS — Precisao Maxima",
+  title: "Web Star OS — Precisão Máxima",
 };
 
 export default function Home() {
@@ -284,7 +284,7 @@ export default function Home() {
             <nav className="lp-nav">
               <a href="#features">Recursos</a>
               <a href="#roles">Perfis</a>
-              <a href="#pricing">Precos</a>
+              <a href="#pricing">Preços</a>
               <a href="#docs">Docs</a>
             </nav>
           </div>
@@ -296,7 +296,7 @@ export default function Home() {
               <h1 className="lp-hero-mega">
                 <span className="lp-thin">Entregue</span><br />
                 <span className="lp-outline">Com</span><br />
-                <span className="lp-red-fill">Forca</span>
+                <span className="lp-red-fill">Força</span>
               </h1>
             </div>
             <div className="lp-hero-bottom">
@@ -304,7 +304,7 @@ export default function Home() {
                 <div className="lp-hero-col-label">Sobre</div>
                 <div className="lp-hero-col-text">
                   Um sistema unificado para workspaces, projetos, tarefas, ciclos e labels.
-                  Controle de acesso baseado em perfis mantém seu time focado e clientes informados.
+                  Controle de acesso baseado em perfis mantém seu time focado e seus clientes informados.
                 </div>
                 <div className="lp-hero-cta-row">
                   <a className="lp-btn-primary" href="#">Comece Agora</a>
@@ -344,15 +344,15 @@ export default function Home() {
           <div className="lp-features" id="features">
             <div className="lp-features-header">
               <div className="lp-section-title">Recursos</div>
-              <div className="lp-section-count">06 Modulos Principais</div>
+              <div className="lp-section-count">06 Módulos Principais</div>
             </div>
             <div className="lp-feat-grid">
               {[
-                { num: "01", name: "Workspaces", desc: "Ambientes isolados para cada equipe. Configuracoes, membros, cobranca e separacao completa de dados." },
-                { num: "02", name: "Projetos", desc: "Agrupamentos logicos com workflows e visualizacoes personalizadas. Prefixos de ID gerados automaticamente por projeto." },
-                { num: "03", name: "Tarefas", desc: "IDs automaticos (WS-001), markdown rico, sub-tarefas, relacoes bidirecionais e historico completo de atividades." },
-                { num: "04", name: "Ciclos", desc: "Sprints com prazo definido, graficos de burndown, rastreamento de velocidade e rollover automatico de trabalho pendente." },
-                { num: "05", name: "Labels", desc: "Tags hierarquicas com cores por workspace ou projeto. Filtragem instantanea entre projetos." },
+                { num: "01", name: "Workspaces", desc: "Ambientes isolados para cada equipe. Configurações, membros, cobrança e separação completa de dados." },
+                { num: "02", name: "Projetos", desc: "Agrupamentos lógicos com workflows e visualizações personalizadas. Prefixos de ID gerados automaticamente por projeto." },
+                { num: "03", name: "Tarefas", desc: "IDs automáticos (WS-001), markdown rico, sub-tarefas, relações bidirecionais e histórico completo de atividades." },
+                { num: "04", name: "Ciclos", desc: "Sprints com prazo definido, gráficos de burndown, rastreamento de velocidade e rollover automático de trabalho pendente." },
+                { num: "05", name: "Labels", desc: "Tags hierárquicas com cores por workspace ou projeto. Filtragem instantânea entre projetos." },
                 { num: "06", name: "Portal do Cliente", desc: "Interface externa para feedback, tickets de suporte e visibilidade de projetos. Separado das ferramentas internas." },
               ].map((f) => (
                 <div key={f.num} className="lp-feat-cell">
@@ -367,13 +367,13 @@ export default function Home() {
           {/* ROLES */}
           <div className="lp-roles" id="roles">
             <div className="lp-roles-header">
-              <div className="lp-section-title">Tres Perfis</div>
+              <div className="lp-section-title">Três Perfis</div>
             </div>
             <div className="lp-roles-strip">
               {[
-                { letter: "A", tag: "Controle Total", title: "Admin", text: "Governanca do workspace, cobranca, gestao de membros e autoridade operacional completa.", perms: ["Config. do workspace", "Gestao de membros", "Cobranca e faturas", "Todas as operacoes"] },
-                { letter: "E", tag: "Construa & Entregue", title: "Funcionario", text: "Acesso completo ao projeto — crie tarefas, gerencie ciclos, aplique labels e entregue.", perms: ["Criar e editar tarefas", "Gerenciar ciclos", "Aplicar labels", "Visualizacoes de projeto"] },
-                { letter: "C", tag: "Acesso ao Portal", title: "Cliente", text: "Portal dedicado para feedback, tickets de suporte e atualizacoes de projetos.", perms: ["Enviar feedback", "Acompanhar tickets", "Ver atualizacoes", "Painel do portal"] },
+                { letter: "A", tag: "Controle Total", title: "Admin", text: "Governança do workspace, cobrança, gestão de membros e autoridade operacional completa.", perms: ["Config. do workspace", "Gestão de membros", "Cobrança e faturas", "Todas as operações"] },
+                { letter: "E", tag: "Construa & Entregue", title: "Funcionário", text: "Acesso completo ao projeto — crie tarefas, gerencie ciclos, aplique labels e entregue.", perms: ["Criar e editar tarefas", "Gerenciar ciclos", "Aplicar labels", "Visualizações de projeto"] },
+                { letter: "C", tag: "Acesso ao Portal", title: "Cliente", text: "Portal dedicado para feedback, tickets de suporte e atualizações de projetos.", perms: ["Enviar feedback", "Acompanhar tickets", "Ver atualizações", "Painel do portal"] },
               ].map((r) => (
                 <div key={r.letter} className="lp-role-panel">
                   <div className="lp-role-giant-letter">{r.letter}</div>
@@ -399,13 +399,13 @@ export default function Home() {
               <span className="lp-thin">A Construir</span><br />
               <span className="lp-outline">Hoje</span>
             </h2>
-            <div className="lp-cta-sub">Gratis para equipes de ate 5 &mdash; sem cartao de credito</div>
+            <div className="lp-cta-sub">Grátis para equipes de até 5 &mdash; sem cartão de crédito</div>
             <a className="lp-btn-primary" href="#">Comece Agora &rarr;</a>
           </div>
 
           <div className="lp-footer">
             <span>&copy; 2025 Web Star OS</span>
-            <span>Projetado com precisao maxima</span>
+            <span>Projetado com precisão máxima</span>
           </div>
         </div>
       </div>
