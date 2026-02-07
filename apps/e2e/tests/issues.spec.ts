@@ -1,5 +1,17 @@
 import { test, expect, type Page } from "@playwright/test";
 
+async function waitForPostSignUpState(page: Page) {
+  await Promise.race([
+    page
+      .getByRole("link", { name: "Open projects" })
+      .waitFor({ state: "visible", timeout: 10_000 }),
+    page
+      .locator("form")
+      .getByRole("button", { name: "Create account" })
+      .waitFor({ state: "visible", timeout: 10_000 }),
+  ]).catch(() => {});
+}
+
 async function signUpAndOpenProjects(page: Page, name = "Issue User") {
   const unique = `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
   const email = `issues-${unique}@example.com`;
@@ -11,6 +23,7 @@ async function signUpAndOpenProjects(page: Page, name = "Issue User") {
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password").fill(password);
   await page.getByRole("button", { name: "Create account" }).click();
+  await waitForPostSignUpState(page);
 
   if (await page.getByRole("link", { name: "Open projects" }).isVisible()) {
     await page.getByRole("link", { name: "Open projects" }).click();

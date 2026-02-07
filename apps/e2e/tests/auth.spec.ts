@@ -1,4 +1,16 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+
+async function waitForPostSignUpState(page: Page) {
+  await Promise.race([
+    page
+      .getByRole("link", { name: "Open projects" })
+      .waitFor({ state: "visible", timeout: 10_000 }),
+    page
+      .locator("form")
+      .getByRole("button", { name: "Create account" })
+      .waitFor({ state: "visible", timeout: 10_000 }),
+  ]).catch(() => {});
+}
 
 test.describe("Authentication", () => {
   test("should allow sign up from the home page", async ({ page }) => {
@@ -12,6 +24,7 @@ test.describe("Authentication", () => {
     await page.getByLabel("Email").fill(email);
     await page.getByLabel("Password").fill(password);
     await page.getByRole("button", { name: "Create account" }).click();
+    await waitForPostSignUpState(page);
 
     if (await page.getByRole("link", { name: "Open projects" }).isVisible()) {
       await page.getByRole("link", { name: "Open projects" }).click();
