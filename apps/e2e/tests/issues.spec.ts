@@ -15,10 +15,13 @@ async function signUpAndOpenProjects(page: Page, name = "Issue User") {
   if (await page.getByRole("link", { name: "Open projects" }).isVisible()) {
     await page.getByRole("link", { name: "Open projects" }).click();
   } else {
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await page
+      .locator(".tab-row")
+      .getByRole("button", { name: "Sign in" })
+      .click();
     await page.getByLabel("Email").fill(email);
     await page.getByLabel("Password").fill(password);
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await page.locator("form").getByRole("button", { name: "Sign in" }).click();
   }
 
   await expect(page).toHaveURL(/\/projects/);
@@ -68,4 +71,3 @@ test.describe("Issues", () => {
     await expect(page.getByText("attachment.txt")).toBeVisible();
   });
 });
-
